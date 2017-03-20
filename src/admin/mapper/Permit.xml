@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">   
+  
+<mapper namespace="admin.entity.Permit">
+      <!-- 自动生成id策略 -->
+    <insert id="add" parameterType="admin.entity.Permit" useGeneratedKeys="true" keyProperty="id">  
+       	insert into tb_permit(pid, 
+	       					   tc_code, 
+	       					   tc_name,
+	       					   tc_url,
+	       					   tc_order, 
+	       					   tc_type) 
+       	values (<choose><when test="m.pid != null and m.pid != ''">#{m.pid}, </when><otherwise>0,</otherwise></choose>
+       			#{m.tc_code},
+       			#{m.tc_name},
+       			#{m.tc_url},
+       			#{m.tc_order},
+       			<choose><when test="m.tc_type != null and m.tc_type != ''">#{m.tc_type}</when><otherwise>null</otherwise></choose>)  
+    </insert>  
+	
+	<delete id="del" parameterType="admin.entity.Permit">
+		update tb_menu set tc_permit_id = null where tc_permit_id = #{id};
+		delete from tb_role_permit_mapping where tc_permit_id = #{id};
+		delete from tb_permit where pid = #{id};
+		delete from tb_permit where id = #{id};
+	</delete>
+	
+	<update id="upd" parameterType="admin.entity.Permit">
+		update tb_permit set
+		  	   pid = <choose><when test="m.pid != null and m.pid != ''">#{m.pid}, </when><otherwise>0,</otherwise></choose>
+		  	   tc_code = #{m.tc_code},
+		  	   tc_name = #{m.tc_name},
+		  	   tc_url = #{m.tc_url},
+		  	   tc_order = #{m.tc_order},
+		  	   tc_type = <choose><when test="m.tc_type != null and m.tc_type != ''">#{m.tc_type}</when><otherwise>null</otherwise></choose>
+		 where id = #{m.id}
+	</update>
+  	
+	<resultMap type="admin.entity.Permit" id="result">
+		<id property="m.id" column="id"/>
+		<result property="m.pid" column="pid"/>
+		<result property="m.tc_code" column="tc_code"/>
+		<result property="m.tc_name" column="tc_name"/>
+		<result property="m.tc_name2" column="tc_name2"/>
+		<result property="m.tc_url" column="tc_url"/>
+		<result property="m.tc_order" column="tc_order"/>
+		<result property="m.tc_type" column="tc_type"/>
+		<result property="m.tc_type_name" column="tc_type_name"/>
+		<result property="m.tc_p_name" column="tc_p_name"/>
+	</resultMap>
+  	
+	<sql id="columns">
+		t.ID, t.PID, t.TC_CODE, t.TC_NAME, t.TC_URL, t.TC_ORDER, t.TC_TYPE, case t.TC_TYPE when 1 then '按钮' else '默认' end TC_TYPE_NAME,
+		concat(t.TC_NAME, ' [', CASE t.TC_TYPE WHEN 1 THEN '按钮' ELSE '默认' END, ']') as TC_NAME2
+	</sql>
+	
+	<sql id="page">
+		<if test="offset!=null and limit!=null"> limit #{offset,javaType=String,jdbcType=NUMERIC}, #{limit,javaType=String,jdbcType=NUMERIC} </if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="pid != null and pid != ''"> and t.PID  = #{pid} </if>
+			<if test="tc_code != null and tc_code != ''"> and t.TC_CODE like concat('%',#{tc_code},'%') </if>
+			<if test="tc_name != null and tc_name != ''"> and t.TC_NAME like concat('%',#{tc_name},'%') </if>
+			<if test="tc_url != null and tc_url != ''"> and t.TC_URL like concat('%',#{tc_url},'%') </if>
+			<if test="tc_order != null and tc_order != ''"> and t.TC_ORDER = #{tc_order} </if>
+			<if test="tc_type != null and tc_type != ''"> and t.TC_TYPE = #{tc_type} </if>
+			<if test="tc_p_name != null and tc_p_name != ''"> and tt.TC_NAME like concat('%',#{tc_p_name},'%') </if>
+		</where>
+	</sql>
+	
+	<select id="getById" resultMap="result">
+		select <include refid="columns"/>, 
+			   tt.tc_name TC_P_NAME
+		  from tb_permit t
+		  left join tb_permit tt on t.pid = tt.id
+		 where t.id = #{id}
+	</select>
+	
+	<select id="get" resultType="list" resultMap="result">
+		select <include refid="columns"/>,  
+			   tt.tc_name TC_P_NAME
+		  from tb_permit t
+		  left join tb_permit tt on t.pid = tt.id
+		<include refid="dynamicWhere" /> order by t.tc_order
+		<include refid="page" />
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(1) 
+		  from tb_permit t
+		  left join tb_permit tt on t.pid = tt.id
+		<include refid="dynamicWhere" />
+	</select>
+	<select id="getCountByUserIdAndActionUrl" resultType="int">
+		select count(1)
+		  from tb_permit t, 
+		  	   tb_role_permit_mapping t1, 
+		  	   tb_user_role_mapping t2, 
+		  	   tb_user t3
+		 where t.id = t1.tc_permit_id 
+		   and t1.tc_role_id = t2.tc_role_id
+		   and t2.tc_user_id = t3.id
+		   and t3.id = #{tc_user_id}
+		   and t.tc_url = #{tc_url};
+	</select>
+	
+	<select id="getByRoleId" resultType="list" resultMap="result">
+		select <include refid="columns"/> 
+		  from tb_permit t
+         inner join tb_role_permit_mapping t1
+		    on t.id = t1.tc_permit_id 
+		   and t1.tc_role_id=#{tc_role_id};
+	</select>
+	
+	<select id="getBtnPermitByUserId" resultType="list" resultMap="result">
+		select <include refid="columns"/>  from tb_permit t
+		 inner join tb_role_permit_mapping t1 on t.id=t1.tc_permit_id and t.tc_type=1
+		 inner join tb_user_role_mapping t2 on t1.tc_role_id=t2.tc_role_id and t2.tc_user_id=#{tc_user_id}
+		 group by t.id
+		 order by t.tc_order
+	</select>
+</mapper>  
