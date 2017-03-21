@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import admin.entity.App;
 import admin.service.AppService;
-import admin.service.PermitService;
 import chok.devwork.BaseController;
 import chok.util.CollectionUtil;
-import factory.Factory;
+import common.Dict;
 
 @Scope("prototype")
 @Controller
@@ -23,8 +22,6 @@ public class AppAction extends BaseController<App>
 {
 	@Autowired
 	private AppService service;
-	@Autowired
-	private PermitService permitService;
 	
 	@RequestMapping("/add1")
 	public String add1() 
@@ -114,7 +111,7 @@ public class AppAction extends BaseController<App>
 	{
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("tc_type", "0");
-		List<Object> treeNodes = Factory.getPermitTreeNodes(req.getLong("id"), params);
+		List<Object> treeNodes = Dict.getPermitTreeNodes(req.getLong("id"), params);
 		printJson(treeNodes);
 	}
 }

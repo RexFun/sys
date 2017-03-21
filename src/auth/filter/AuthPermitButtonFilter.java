@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 import admin.entity.User;
 import auth.action.AuthAction;
-import factory.Factory;
+import common.Factory;
 
 public class AuthPermitButtonFilter implements Filter 
 {

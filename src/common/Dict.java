@@ -1,4 +1,4 @@
-package factory;
+package common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,15 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import admin.entity.Permit;
-import admin.service.MenuService;
-import admin.service.PermitService;
-import chok.devwork.BeanFactory;
 
-
-public class Factory {
-	public static MenuService getMenuService(){return (MenuService) BeanFactory.getBean("menuService");}
-	public static PermitService getPermitService(){return (PermitService) BeanFactory.getBean("permitService");}
-	
+public class Dict 
+{
 	/**
 	 * 根据类型获取权限树节点集合
 	 * @param permitId 已关联权限id
@@ -38,8 +32,8 @@ public class Factory {
 		List<Object> treeNodes = new ArrayList<Object>();
 		if(permitId!=0)
 		{// 所有权限，且标记已选权限
-			Permit selectedPermitObj = getPermitService().getById(permitId);
-			List<Permit> permitData = getPermitService().get(params);
+			Permit selectedPermitObj = Factory.getPermitService().getById(permitId);
+			List<Permit> permitData = Factory.getPermitService().get(params);
 			for(int i=0; i<permitData.size(); i++)
 			{
 				Permit o = permitData.get(i);
@@ -52,7 +46,7 @@ public class Factory {
 		}
 		else
 		{// 所有权限
-			List<Permit> resultData = getPermitService().get(params);
+			List<Permit> resultData = Factory.getPermitService().get(params);
 			for(Permit o : resultData)
 			{
 				treeNodes.add(o.getM());

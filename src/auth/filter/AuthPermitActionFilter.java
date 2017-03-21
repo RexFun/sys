@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 
 import admin.entity.User;
 import auth.action.AuthAction;
-import factory.Factory;
+import common.Factory;
 
 public class AuthPermitActionFilter implements Filter 
 {
