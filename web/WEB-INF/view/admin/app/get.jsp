@@ -48,7 +48,7 @@
 				<div class="form-group">
 					<label for="f_tc_code">代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
 					<label for="f_tc_name">名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
-					<label for="f_tc_type">权限类型：</label>
+					<label for="f_tc_type">状态：</label>
 					<select class="form-control input-sm" id="f_tc_status" name="po.m.tc_status">
 						<option value="">全部</option>
 						<option value="1">启用</option>
