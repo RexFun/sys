@@ -24,10 +24,10 @@
 						<div class="col-md-6 column">
 							<fieldset>
 							<legend>基础信息</legend>
-								<div class="form-group"><label class="control-label" for="id">用户ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
-								<div class="form-group"><label class="control-label" for="tc_code">用户代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
-								<div class="form-group"><label class="control-label" for="tc_name">用户名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
-								<div class="form-group"><label class="control-label" for="tc_email">用户邮箱：</label><input type="text" class="form-control input-sm" id="tc_email" name="m['tc_email']" value="${po.m.tc_email}" readonly="readonly"/></div>
+								<div class="form-group"><label class="control-label" for="id">ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
+								<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
+								<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
+								<div class="form-group"><label class="control-label" for="tc_email">邮箱：</label><input type="text" class="form-control input-sm" id="tc_email" name="m['tc_email']" value="${po.m.tc_email}" readonly="readonly"/></div>
 								<div class="form-group"><label class="control-label" for="tc_add_time">创建时间：</label><input type="text" class="form-control input-sm" id="tc_add_time" name="m['tc_add_time']" value="${po.m.tc_add_time}" readonly="readonly"/></div>
 							</fieldset>
 						</div>

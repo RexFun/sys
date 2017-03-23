@@ -2,6 +2,7 @@
 <%@ include file="/common/inc_header.jsp"%>
 <!-- 主内容面板 -->
 <div class="content-wrapper">
+	<!-- Header ======================================================================================================= -->
 	<section class="content-header">
 		<h1>${param.menuName}<small>明细</small></h1>
 		<ol class="breadcrumb">
@@ -10,6 +11,7 @@
 			<li class="active">明细</li>
 		</ol>
 	</section>
+	<!-- Content ======================================================================================================= -->
 	<section class="content">
 		<div class="box box-default">
 			<div class="box-header with-border">
@@ -20,13 +22,21 @@
 			</div>
 			<div class="box-body">
 				<form class="dataForm" id="dataForm" role="form">
-					<div class="form-group"><label class="control-label" for="id">菜单ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_code">菜单代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_name">菜单名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_url">菜单URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" value="${po.m.tc_url}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_order">菜单排序号：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" value="${po.m.tc_order}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_permit_name">绑定权限：</label><input type="text" class="form-control input-sm" id="tc_permit_name" name="m['tc_permit_name']" value="${po.m.tc_permit_name}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_p_name">父节点：</label><input type="text" class="form-control input-sm" id="tc_p_name" name="m['tc_p_name']" value="${po.m.tc_p_name}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="id">ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_url">URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" value="${po.m.tc_url}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_order">排序：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" value="${po.m.tc_order}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_app_name">应用：</label><input type="text" class="form-control input-sm" id="tc_app_name" name="m['tc_app_name']" value="${po.m.tc_app_name}[${po.m.tc_app_id}]" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_p_name">PID：</label><input type="text" class="form-control input-sm" id="tc_p_name" name="m['tc_p_name']" value="${po.m.tc_p_name}[${po.m.pid}]" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_permit_name">权限：</label><input type="text" class="form-control input-sm" id="tc_permit_name" name="m['tc_permit_name']" value="${po.m.tc_permit_name}[${po.m.tc_permit_id}]" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_level">级别：</label>
+						<select class="form-control input-sm" id="tc_level" name="m['tc_level']" readonly="readonly">
+							<option value="0">根节点</option>
+							<option value="1">一级节点</option>
+							<option value="2">次级节点</option>
+						</select>
+					</div>				
 				</form>
 			</div>
 			<div class="box-footer">
@@ -47,5 +57,7 @@ $(function(){
 	$("#back").click(function(){
 		location.href = "get.action?"+$chok.view.fn.getUrlParams("${queryParams}");
 	});
+	// 类型selection返回值
+	$("#tc_level").val("${po.m.tc_level}");
 });
 </script>

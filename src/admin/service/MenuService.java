@@ -1,6 +1,8 @@
 package admin.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -77,12 +79,18 @@ public class MenuService extends BaseService<Menu,Long>
 			menus.add((Menu) menuDao.getByUserId(m).get(0));
 		}
 		// 3.2 格式化为json
-		List<Object> treeNodes = new ArrayList<Object>();
+		List<Map> treeNodes = new ArrayList<Map>();
 		for(int i=0; i<menus.size(); i++)
 		{
 			Menu o = menus.get(i);
 			treeNodes.add(o.getM());
 		}
+		// 3.3 按tc_order排序
+		Collections.sort(treeNodes,new Comparator<Map>(){
+            public int compare(Map arg0, Map arg1) {
+                return (arg0.get("tc_order").toString()).compareTo(arg1.get("tc_order").toString());
+            }
+        });
 		return treeNodes;
 	}
 	

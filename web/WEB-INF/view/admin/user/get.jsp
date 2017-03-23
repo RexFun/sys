@@ -43,9 +43,9 @@
 					<div class="modal-body">
 						<!-- queryForm -->
 						<div class="form-group">
-							 <label for="f_tc_code">用户代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
-							 <label for="f_tc_name">用户名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
-							 <label for="f_tc_email">用户邮箱：</label><input type="text" class="form-control input-sm" id="f_tc_email"/>
+							 <label for="f_tc_code">代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
+							 <label for="f_tc_name">名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
+							 <label for="f_tc_email">邮箱：</label><input type="text" class="form-control input-sm" id="f_tc_email"/>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -94,11 +94,11 @@ $chok.view.get.config.urlParams = function(){
 };
 $chok.view.get.config.tableColumns = 
 [
-    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:true},
-    {title:'用户代号', field:'m.tc_code', align:'center', valign:'middle', sortable:true},
-    {title:'用户名称', field:'m.tc_name', align:'center', valign:'middle', sortable:true},
-    {title:'用户邮箱', field:'m.tc_email', align:'center', valign:'middle', sortable:true},
-    {title:'创建时间', field:'m.tc_add_time', align:'center', valign:'middle', sortable:true}
+    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
+    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
+    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false},
+    {title:'邮箱', field:'m.tc_email', align:'center', valign:'middle', sortable:false},
+    {title:'创建时间', field:'m.tc_add_time', align:'center', valign:'middle', sortable:false}
 ];
 $chok.view.get.callback.delRows = function(){
 };

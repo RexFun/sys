@@ -34,7 +34,7 @@
 	</resultMap>
   	
 	<sql id="columns">
-		ID, TC_CODE, TC_NAME, TC_EMAIL, TC_PASSWORD, TC_ADD_TIME
+		t.id, t.tc_code, t.tc_name, t.tc_email, t.tc_password, t.tc_add_time
 	</sql>
 	
 	<sql id="page">
@@ -43,25 +43,25 @@
 	
 	<sql id="dynamicWhere">
 		<where>
-			<if test="tc_code != null and tc_code != ''"> and TC_CODE like concat('%',#{tc_code},'%') </if>
-			<if test="tc_name != null and tc_name != ''"> and TC_NAME like concat('%',#{tc_name},'%') </if>
-			<if test="tc_email != null and tc_email != ''"> and TC_EMAIL like concat('%',#{tc_email},'%') </if>
-			<if test="login_account != null and login_account != ''"> and (TC_CODE = #{login_account} or TC_NAME = #{login_account} or TC_EMAIL = #{login_account})</if>
+			<if test="tc_code != null and tc_code != ''"> and t.tc_code like concat('%',#{tc_code},'%') </if>
+			<if test="tc_name != null and tc_name != ''"> and t.tc_name like concat('%',#{tc_name},'%') </if>
+			<if test="tc_email != null and tc_email != ''"> and t.tc_email like concat('%',#{tc_email},'%') </if>
+			<if test="login_account != null and login_account != ''"> and (t.tc_code = #{login_account} or t.tc_name = #{login_account} or t.tc_email = #{login_account})</if>
 		</where>
 	</sql>	
 	
 	<select id="getById" resultMap="result">
-		select <include refid="columns"/> from tb_user where id = #{id}
+		select <include refid="columns"/> from tb_user t where t.id = #{id}
 	</select>
 	
 	<select id="get" resultType="list" resultMap="result">
-		select <include refid="columns"/> from tb_user
+		select <include refid="columns"/> from tb_user t
 		<include refid="dynamicWhere" /> order by 1
 		<include refid="page" />
 	</select>
 	
 	<select id="getCount" resultType="int">
-		select count(1) from tb_user
+		select count(1) from tb_user t
 		<include refid="dynamicWhere" />
 	</select>
 </mapper>  

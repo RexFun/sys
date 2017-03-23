@@ -2,6 +2,7 @@
 <%@ include file="/common/inc_header.jsp"%>
 <!-- 主内容面板 -->
 <div class="content-wrapper">
+	<!-- Header ======================================================================================================= -->
 	<section class="content-header">
 		<h1>${param.menuName}</h1>
 		<ol class="breadcrumb">
@@ -9,27 +10,28 @@
 			<li class="active">${param.menuName}</li>
 		</ol>
 	</section>
+	<!-- Content ======================================================================================================= -->
 	<section class="content">
 		<div class="row">
+			<!-- Left Content ======================================================================================================= -->
 			<div class="col-md-9">
 				<div class="box box-default">
 					<div class="box-header with-border">
 						<h3 class="box-title"><small><i class="glyphicon glyphicon-th-list"></i></small></h3>
 					</div>
 					<div class="box-body">
-						<!-- toolbar
-						======================================================================================================= -->
+						<!-- ToolBar ======================================================================================================= -->
 						<div id="toolbar">
 						<button type="button" class="btn btn-default" id="bar_btn_add" pbtnId="pbtn_add"><i class="glyphicon glyphicon-plus"></i></button>
 						<button type="button" class="btn btn-default" id="bar_btn_del" pbtnId="pbtn_del"><i class="glyphicon glyphicon-remove"></i></button>
 						<button type="button" class="btn btn-default" id="bar_btn_query" pbtnId="pbtn_query" data-toggle="modal" data-target="#modal_form_query"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
-						<!-- data list
-						======================================================================================================= -->
+						<!-- DataTable ======================================================================================================= -->
 						<table id="tb_list"></table>
 					</div>
 				</div>
 			</div>
+			<!-- Right Content ======================================================================================================= -->
 			<div class="col-md-3">
 				<div class="box box-default">
 					<div class="box-header with-border">
@@ -44,7 +46,7 @@
 		</div>
 	</section>
 </div>
-<!-- query form modal ======================================================================================================= -->
+<!-- QueryDialog ======================================================================================================= -->
 <form id="form_query">
 <div id="modal_form_query" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
 	<div class="modal-dialog">
@@ -56,9 +58,21 @@
 			<div class="modal-body">
 				<!-- queryForm -->
 				<div class="form-group">
-					 <label for="f_tc_p_name">父节点名称：</label><input type="text" class="form-control input-sm" id="f_tc_p_name"/>
-					 <label for="f_tc_name">菜单代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
-					 <label for="f_tc_name">菜单名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
+					<label for="f_tc_app_id">应用：</label>
+					<select class="form-control input-sm" id="f_tc_app_id">
+						<option value="">全部</option>
+						<c:forEach var="o" items="${appList}"><option value="${o.m.id}">${o.m.tc_name}</option></c:forEach>
+					</select>
+					<label for="f_tc_level">级别：</label>
+					<select class="form-control input-sm" id="f_tc_level">
+						<option value="">全部</option>
+						<option value="0">根节点</option>
+						<option value="1">一级节点</option>
+						<option value="2">次级节点</option>
+					</select>
+					<label for="f_tc_name">代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
+					<label for="f_tc_name">名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
+					<label for="f_tc_p_name">父节点名称：</label><input type="text" class="form-control input-sm" id="f_tc_p_name"/>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -84,41 +98,52 @@ $(function() {
 	$chok.view.get.init.toolbar();
 	$chok.view.get.init.modalFormQuery();
 	$chok.view.get.init.table("${queryParams.f_page}","${queryParams.f_pageSize}");
-	initTree();
 	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
 });
 /**********************************************************/
 /* 初始化配置 */
 /**********************************************************/
 $chok.view.get.config.setPreFormParams = function(){
- 	$("#f_tc_p_name").val(typeof("${queryParams.f_tc_p_name}")=="undefined"?"":"${queryParams.f_tc_p_name}");
+ 	$("#f_tc_app_id").val(typeof("${queryParams.f_tc_app_id}")=="undefined"?"":"${queryParams.f_tc_app_id}");
+ 	$("#f_tc_level").val(typeof("${queryParams.f_tc_level}")=="undefined"?"":"${queryParams.f_tc_level}");
 	$("#f_tc_code").val(typeof("${queryParams.f_tc_code}")=="undefined"?"":"${queryParams.f_tc_code}");
 	$("#f_tc_name").val(typeof("${queryParams.f_tc_name}")=="undefined"?"":"${queryParams.f_tc_name}");
+ 	$("#f_tc_p_name").val(typeof("${queryParams.f_tc_p_name}")=="undefined"?"":"${queryParams.f_tc_p_name}");
 };
 $chok.view.get.config.formParams = function(p){
-	p.tc_p_name = $("#f_tc_p_name").val();
+	p.tc_app_id = $("#f_tc_app_id").val();
+	p.tc_level = $("#f_tc_level").val();
 	p.tc_code = $("#f_tc_code").val();
 	p.tc_name = $("#f_tc_name").val();
+	p.tc_p_name = $("#f_tc_p_name").val();
     return p;
 };
 $chok.view.get.config.urlParams = function(){
-	return {f_tc_p_name : $("#f_tc_p_name").val(),
+	return {f_tc_app_id : $("#f_tc_app_id").val(),
+			f_tc_level : $("#f_tc_level").val(),
 		   	f_tc_code : $("#f_tc_code").val(),
-		   	f_tc_name : $("#f_tc_name").val()};
+		   	f_tc_name : $("#f_tc_name").val(),
+			f_tc_p_name : $("#f_tc_p_name").val()};
 };
 $chok.view.get.config.tableColumns = 
 [
-    {title:'菜单代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
-    {title:'菜单名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false},
-    {title:'菜单URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false},
-    {title:'菜单排序号', field:'m.tc_order', align:'center', valign:'middle', sortable:false},
-    {title:'绑定权限', field:'m.tc_permit_name', align:'center', valign:'middle', sortable:false},
-    {title:'父节点', field:'m.tc_p_name', align:'center', valign:'middle', sortable:false}
+    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
+    {title:'PID', field:'m.pid', align:'center', valign:'middle', sortable:false},
+    {title:'权限', field:'m.tc_permit_id', align:'center', valign:'middle', sortable:false},
+    {title:'类型', field:'m.tc_level_name', align:'center', valign:'middle', sortable:false},
+    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
+    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false},
+    {title:'URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false},
+    {title:'排序', field:'m.tc_order', align:'center', valign:'middle', sortable:false},
+    {title:'应用', field:'m.tc_app_name', align:'center', valign:'middle', sortable:false}
 ];
 $chok.view.get.callback.delRows = function(){
-	zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
+	//zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
+	initTree();
 };
 $chok.view.get.callback.onLoadSuccess = function(){
+	//zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
+	initTree();
 	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
 };
 /**********************************************************/
@@ -139,7 +164,7 @@ var setting =
 	async: 
 	{
 		enable: true,
-		url:"getMenuTreeNodes.action"
+		url:function(){return "${ctx}/dict/getMenuTreeNodes.action?tc_app_id="+$("#f_tc_app_id").val();}
 	},
 	data: 
 	{

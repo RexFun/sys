@@ -20,24 +20,31 @@
 			</div>
 			<div class="box-body">
 				<form class="dataForm" id="dataForm" role="form" action="add2.action" method="post">
-					<div class="form-group"><label class="control-label" for="tc_code">权限代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" validate validate-rule-required /></div>
-					<div class="form-group"><label class="control-label" for="tc_name">权限名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" validate validate-rule-required /></div>
-					<div class="form-group">
-						<label for="tc_type">权限类型：</label>
+					<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" validate validate-rule-required /></div>
+					<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" validate validate-rule-required /></div>
+					<div class="form-group"><label class="control-label" for="tc_url">URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" /></div>
+					<div class="form-group"><label class="control-label" for="tc_order">排序：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" validate validate-rule-inputType="integer" /></div>
+					<div class="form-group"><label for="tc_type">类型：</label>
 						<select class="form-control input-sm" id="tc_type" name="m['tc_type']">
-							<option value="0">默认</option>
-							<option value="1">按钮</option>
+							<option value="">全部</option>
+							<option value="0">应用</option>
+							<option value="1">菜单</option>
+							<option value="2">按钮</option>
+							<option value="3">请求</option>
 						</select>
 					</div>
-					<div class="form-group"><label class="control-label" for="tc_url">权限URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" /></div>
-					<div class="form-group"><label class="control-label" for="tc_order">权限排序号：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" validate validate-rule-inputType="integer" /></div>
+					<div class="form-group"><label class="control-label" for="tc_app_id">应用：</label>
+						<input type="text" class="form-control input-sm" id="sel_app"/>
+						<input type="hidden" class="form-control input-sm" id="tc_app_id" name="m['tc_app_id']" />
+					</div>
 					<div class="form-group"><label class="control-label" for="pid">父节点：</label>
 						<input type="text" class="form-control input-sm" id="sel_permit"/>
 						<input type="hidden" class="form-control input-sm" id="pid" name="m['pid']"/>
 					</div>
 				</form>
 				<!-- modal -->
-				<div id="modal_sel"></div>
+				<div id="modal_sel_app"></div>
+				<div id="modal_sel_permit"></div>
 			</div>
 			<div class="box-footer">
 				<button type="submit" class="btn btn-block btn-success btn-flat pull-right" id="dataFormSave"><i class="glyphicon glyphicon-floppy-save"></i></button>
@@ -61,6 +68,25 @@ $chok.form.callback = function(){
 	}
 };
 /**********************************************************/
+/* zTree配置 */
+/**********************************************************/
+// appTree 的参数配置
+var appSetting = {
+	async: 
+	{
+		enable: true,
+		url:function(){return "${ctx}/dict/getAppTreeNodes.action";}
+	}
+};
+// permitTree 的参数配置
+var permitSetting = {
+	async: 
+	{
+		enable: true,
+		url:function(){return "${ctx}/dict/getPermitTreeNodes.action?tc_app_id="+$("#tc_app_id").val();}
+	}
+};
+/**********************************************************/
 /* 全局函数 */
 /**********************************************************/
 $(function(){
@@ -69,29 +95,34 @@ $(function(){
 	$("#back").click(function(){
 		location.href = "get.action?"+$chok.view.fn.getUrlParams("${queryParams}");
 	});
-    var s = $("#modal_sel").ztreeSelectorModal({treeid:"tree_permit",
- 											  	title:"请选择权限节点",
- 											  	setting:permitSetting,
- 											  	callback:{
- 													onConfirm:function(modalObj,rtnVal){
- 														$("#sel_permit").val(rtnVal.vName);
- 														$("#pid").val(rtnVal.vId);
- 													}
- 											  	}
+	// 初始化所有modal_sel
+	var modal_sel_app = $("#modal_sel_app").ztreeSelectorModal({
+		treeid : "tree_app",
+		title : "绑定应用",
+		setting : appSetting,
+		callback : {
+			onConfirm : function(modalObj, rtnVal) {
+				$("#sel_app").val(rtnVal.vName);
+				$("#tc_app_id").val(rtnVal.vId);
+			}
+		}
+	});
+    var modal_sel_permit = $("#modal_sel_permit").ztreeSelectorModal({
+    	treeid:"tree_permit",
+	  	title:"绑定父节点",
+	  	setting:permitSetting,
+	  	callback:{
+			onConfirm:function(modalObj,rtnVal){
+				$("#sel_permit").val(rtnVal.vName);
+				$("#pid").val(rtnVal.vId);
+			}
+	  	}
     });
-    $("#sel_permit").click(function(){
-    	s.modal("show");
+	$("#sel_app").focus(function() {
+		modal_sel_app.modal("show");
+	});
+    $("#sel_permit").focus(function(){
+    	modal_sel_permit.modal("show");
     });
 });
-/**********************************************************/
-/* zTree配置 */
-/**********************************************************/
-// permitTree 的参数配置
-var permitSetting = {
-	async: 
-	{
-		enable: true,
-		url:"getPermitTreeNodes.action"
-	}
-};
 </script>

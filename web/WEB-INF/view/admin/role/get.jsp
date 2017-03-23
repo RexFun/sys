@@ -43,7 +43,7 @@
 					<div class="modal-body">
 						<!-- queryForm -->
 						<div class="form-group">
-							 <label for="f_tc_name">角色名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
+							 <label for="f_tc_name">名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -86,9 +86,9 @@ $chok.view.get.config.urlParams = function(){
 };
 $chok.view.get.config.tableColumns = 
 [
-    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:true},
-    {title:'角色代号', field:'m.tc_code', align:'center', valign:'middle', sortable:true},
-    {title:'角色名称', field:'m.tc_name', align:'center', valign:'middle', sortable:true}
+    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
+    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
+    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false}
 ];
 $chok.view.get.callback.delRows = function(){
 };

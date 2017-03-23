@@ -1,7 +1,5 @@
 package admin.action;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import admin.entity.Permit;
+import admin.service.AppService;
 import admin.service.PermitService;
 import chok.devwork.BaseController;
 import chok.util.CollectionUtil;
@@ -22,6 +21,8 @@ public class PermitAction extends BaseController<Permit>
 {
 	@Autowired
 	private PermitService service;
+	@Autowired
+	private AppService appService;
 	
 	@RequestMapping("/add1")
 	public String add1() 
@@ -54,6 +55,7 @@ public class PermitAction extends BaseController<Permit>
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			result.setSuccess(false);
 			result.setMsg(e.getMessage());
 		}
@@ -94,6 +96,7 @@ public class PermitAction extends BaseController<Permit>
 	public String get() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
+		put("appList", appService.get(null));
 		return "/admin/permit/get.jsp";
 	}
 	
@@ -106,33 +109,35 @@ public class PermitAction extends BaseController<Permit>
 		printJson(result.getData());
 	}
 	
-	@RequestMapping("/getPermitTreeNodes")
-	public void getPermitTreeNodes()
-	{
-		List<Object> treeNodes = new ArrayList<Object>();
-		if(req.getLong("id")!=0)
-		{// 所有权限，且标记已选权限
-			Permit selectedPermitObj = service.getById(req.getLong("id"));
-			List<Permit> permitData = service.get(null);
-			for(int i=0; i<permitData.size(); i++)
-			{
-				Permit o = permitData.get(i);
-				if(o.getLong("id") == selectedPermitObj.getLong("id"))
-				{
-					o.set("checked", true);
-				}
-				treeNodes.add(o.getM());
-			}
-		}
-		else
-		{// 所有权限
-			List<Permit> permitData = service.get(null);
-			for(int i=0; i<permitData.size(); i++)
-			{
-				Permit o = permitData.get(i);
-				treeNodes.add(o.getM());
-			}
-		}
-		printJson(treeNodes);
-	}
+//	@RequestMapping("/getPermitTreeNodes")
+//	public void getPermitTreeNodes()
+//	{
+//		List<Object> treeNodes = Dict.getPermitTreeNodes(req.getLong("permitId"), req.getParameterValueMap(false, true));
+//		printJson(treeNodes);
+//		List<Object> treeNodes = new ArrayList<Object>();
+//		if(req.getLong("id")!=0)
+//		{// 所有权限，且标记已选权限
+//			Permit selectedPermitObj = service.getById(req.getLong("id"));
+//			List<Permit> permitData = service.get(null);
+//			for(int i=0; i<permitData.size(); i++)
+//			{
+//				Permit o = permitData.get(i);
+//				if(o.getLong("id") == selectedPermitObj.getLong("id"))
+//				{
+//					o.set("checked", true);
+//				}
+//				treeNodes.add(o.getM());
+//			}
+//		}
+//		else
+//		{// 所有权限
+//			List<Permit> permitData = service.get(null);
+//			for(int i=0; i<permitData.size(); i++)
+//			{
+//				Permit o = permitData.get(i);
+//				treeNodes.add(o.getM());
+//			}
+//		}
+//		printJson(treeNodes);
+//	}
 }

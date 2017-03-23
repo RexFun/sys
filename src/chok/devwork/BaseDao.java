@@ -12,7 +12,7 @@ public abstract class BaseDao<T,PK> extends SqlSessionDaoSupport
 	 * 用于返回命名空间的全路径Class.getName()
 	 * @return Class
 	 */
-	protected abstract Class getEntityClass();
+	protected abstract Class<T> getEntityClass();
 	private String _statement = null;
 	private static int DEFAULT_OFFSET = 1;
 	private static int DEFAULT_LIMIT = 5;

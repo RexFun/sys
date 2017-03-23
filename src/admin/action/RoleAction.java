@@ -112,17 +112,17 @@ public class RoleAction extends BaseController<Role>
 		printJson(result.getData());
 	}
 	
-	@RequestMapping("/getPermitTreeNodes")
-	public void getPermitTreeNodes()
-	{
-		List<Permit> resultData = permitService.get(null);
-		List<Object> treeNodes = new ArrayList<Object>();
-		for(Permit o : resultData)
-		{
-			treeNodes.add(o.getM());
-		}
-		printJson(treeNodes);
-	}
+//	@RequestMapping("/getPermitTreeNodes")
+//	public void getPermitTreeNodes()
+//	{
+//		List<Permit> resultData = permitService.get(null);
+//		List<Object> treeNodes = new ArrayList<Object>();
+//		for(Permit o : resultData)
+//		{
+//			treeNodes.add(o.getM());
+//		}
+//		printJson(treeNodes);
+//	}
 	
 	@RequestMapping("/getPermitTreeNodesByRole")
 	public void getPermitTreeNodesByRole()

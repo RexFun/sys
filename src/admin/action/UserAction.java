@@ -152,18 +152,6 @@ public class UserAction extends BaseController<User>
 		printJson(result.getData());
 	}
 	
-	@RequestMapping("/getRoleTreeNodes")
-	public void getRoleTreeNodes()
-	{
-		List<Role> resultData = roleService.get(null);
-		List<Object> treeNodes = new ArrayList<Object>();
-		for(Role o : resultData)
-		{
-			treeNodes.add(o.getM());
-		}
-		printJson(treeNodes);
-	}
-	
 	@RequestMapping("/getRoleTreeNodesByUser")
 	public void getRoleTreeNodesByUser()
 	{

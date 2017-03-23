@@ -56,14 +56,21 @@
 			<div class="modal-body">
 				<!-- queryForm -->
 				<div class="form-group">
+					<label for="f_tc_code">代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
+					<label for="f_tc_name">名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
 					<label for="f_tc_p_name">父节点名称：</label><input type="text" class="form-control input-sm" id="f_tc_p_name"/>
-					<label for="f_tc_code">权限代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
-					<label for="f_tc_name">权限名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
-					<label for="f_tc_type">权限类型：</label>
+					<label for="f_tc_app_id">应用：</label>
+					<select class="form-control input-sm" id="f_tc_app_id">
+						<option value="">全部</option>
+						<c:forEach var="o" items="${appList}"><option value="${o.m.id}">${o.m.tc_name}</option></c:forEach>
+					</select>
+					<label for="f_tc_type">类型：</label>
 					<select class="form-control input-sm" id="f_tc_type" name="po.m.tc_type">
 						<option value="">全部</option>
-						<option value="0">默认</option>
-						<option value="1">按钮</option>
+						<option value="0">应用</option>
+						<option value="1">菜单</option>
+						<option value="2">按钮</option>
+						<option value="3">请求</option>
 					</select>
 				</div>
 			</div>
@@ -90,44 +97,51 @@ $(function() {
 	$chok.view.get.init.toolbar();
 	$chok.view.get.init.modalFormQuery();
 	$chok.view.get.init.table("${queryParams.f_page}","${queryParams.f_pageSize}");
-	initTree();
 	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
 });
 /**********************************************************/
 /* 初始化配置 */
 /**********************************************************/
 $chok.view.get.config.setPreFormParams = function(){
+ 	$("#f_tc_app_id").val(typeof("${queryParams.f_tc_app_id}")=="undefined"?"":"${queryParams.f_tc_app_id}");
  	$("#f_tc_p_name").val(typeof("${queryParams.f_tc_p_name}")=="undefined"?"":"${queryParams.f_tc_p_name}");
 	$("#f_tc_code").val(typeof("${queryParams.f_tc_code}")=="undefined"?"":"${queryParams.f_tc_code}");
 	$("#f_tc_name").val(typeof("${queryParams.f_tc_name}")=="undefined"?"":"${queryParams.f_tc_name}");
 	$("#f_tc_type").val(typeof("${queryParams.f_tc_type}")=="undefined"?"":"${queryParams.f_tc_type}"); 
 };
 $chok.view.get.config.formParams = function(p){
-	p.tc_p_name = $("#f_tc_p_name").val();
+	p.tc_app_id = $("#f_tc_app_id").val();
 	p.tc_code = $("#f_tc_code").val();
 	p.tc_name = $("#f_tc_name").val();
 	p.tc_type = $("#f_tc_type").val();
+	p.tc_p_name = $("#f_tc_p_name").val();
     return p;
 };
 $chok.view.get.config.urlParams = function(){
-	return {f_tc_p_name : $("#f_tc_p_name").val(),
+	return {f_tc_app_id : $("#f_tc_app_id").val(),
 		   	f_tc_code : $("#f_tc_code").val(),
 		   	f_tc_name : $("#f_tc_name").val(),
-		   	f_tc_type : $("#f_tc_type").val()};
+		   	f_tc_type : $("#f_tc_type").val(),
+			f_tc_p_name : $("#f_tc_p_name").val()};
 };
 $chok.view.get.config.tableColumns = 
 [
-	{title:'权限代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
-    {title:'权限名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false},
-    {title:'权限类型', field:'m.tc_type_name', align:'center', valign:'middle', sortable:false},
-    {title:'权限URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false},
-    {title:'权限排序号', field:'m.tc_order', align:'center', valign:'middle', sortable:false},
-    {title:'父节点', field:'m.tc_p_name', align:'center', valign:'middle', sortable:false}
+	{title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
+    {title:'PID', field:'m.pid', align:'center', valign:'middle', sortable:false},
+	{title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
+    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false},
+    {title:'类型', field:'m.tc_type_name', align:'center', valign:'middle', sortable:false},
+    {title:'URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false},
+    {title:'排序', field:'m.tc_order', align:'center', valign:'middle', sortable:false},
+    {title:'应用', field:'m.tc_app_name', align:'center', valign:'middle', sortable:false}
 ];
 $chok.view.get.callback.delRows = function(){
-	zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
+	//zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
+	initTree();
 };
 $chok.view.get.callback.onLoadSuccess = function(){
+	//zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
+	initTree();
 	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
 };
 /**********************************************************/
@@ -155,7 +169,7 @@ var setting =
 	async: 
 	{
 		enable: true,
-		url:"getPermitTreeNodes.action"
+		url:function(){return "${ctx}/dict/getPermitTreeNodes.action?tc_app_id="+$("#f_tc_app_id").val();}
 	},
 	data: 
 	{

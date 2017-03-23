@@ -1,7 +1,5 @@
 package admin.action;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import admin.entity.Menu;
-import admin.entity.Permit;
+import admin.service.AppService;
 import admin.service.MenuService;
-import admin.service.PermitService;
 import chok.devwork.BaseController;
 import chok.util.CollectionUtil;
-
 
 @Scope("prototype")
 @Controller
@@ -25,7 +21,7 @@ public class MenuAction extends BaseController<Menu>
 	@Autowired
 	private MenuService service;
 	@Autowired
-	private PermitService permitService;
+	private AppService appService;
 	
 	@RequestMapping("/add1")
 	public String add1() 
@@ -98,6 +94,7 @@ public class MenuAction extends BaseController<Menu>
 	public String get() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
+		put("appList", appService.get(null));
 		return "/admin/menu/get.jsp";
 	}
 	
@@ -110,81 +107,44 @@ public class MenuAction extends BaseController<Menu>
 		printJson(result.getData());
 	}
 	
-	@RequestMapping("/getMenuTreeNodes")
-	public void getMenuTreeNodes()
-	{
-		List<Object> treeNodes = new ArrayList<Object>();
-		if(req.getLong("id")!=0)
-		{// 所有菜单，且标记已选菜单
-			Menu selectedMenuObj = service.getById(req.getLong("id"));
-			List<Menu> menuData = service.get(null);
-			for(int i=0; i<menuData.size(); i++)
-			{
-				Menu o = menuData.get(i);
-				if(o.getLong("id") == selectedMenuObj.getLong("id"))
-				{
-					o.set("checked", true);
-				}
-				treeNodes.add(o.getM());
-			}
-		}
-		else
-		{// 所有菜单
-			List<Menu> resultData = service.get(null);
-			for(Menu o : resultData)
-			{
-				treeNodes.add(o.getM());
-			}
-		}
-		printJson(treeNodes);
-	}
+//	@RequestMapping("/getAppTreeNodes")
+//	public void getAppTreeNodes()
+//	{
+//		List<Object> treeNodes = Dict.getAppTreeNodes(req.getLong("appId"), null);
+//		printJson(treeNodes);
+//	}
+//	
+//	@RequestMapping("/getMenuTreeNodes")
+//	public void getMenuTreeNodes()
+//	{
+//		List<Object> treeNodes = Dict.getMenuTreeNodes(req.getLong("menuId"), req.getParameterValueMap(false, true));
+//		printJson(treeNodes);
+//	}
+//	
+//	@RequestMapping("/getPermitTreeNodes")
+//	public void getPermitTreeNodes()
+//	{
+//		List<Object> treeNodes = Dict.getPermitTreeNodes(req.getLong("permitId"), req.getParameterValueMap(false, true));
+//		printJson(treeNodes);
+//	}
 	
-	@RequestMapping("/getPermitTreeNodes")
-	public void getPermitTreeNodes()
-	{
-		List<Object> treeNodes = new ArrayList<Object>();
-		if(req.getLong("id")!=0)
-		{// 所有权限，且标记已选权限
-			Permit selectedPermitObj = permitService.getById(req.getLong("id"));
-			List<Permit> permitData = permitService.get(null);
-			for(int i=0; i<permitData.size(); i++)
-			{
-				Permit o = permitData.get(i);
-				if(o.getLong("id") == selectedPermitObj.getLong("id"))
-				{
-					o.set("checked", true);
-				}
-				treeNodes.add(o.getM());
-			}
-		}
-		else
-		{// 所有权限
-			List<Permit> resultData = permitService.get(null);
-			for(Permit o : resultData)
-			{
-				treeNodes.add(o.getM());
-			}
-		}
-		printJson(treeNodes);
-	}
-	
-	@RequestMapping("/getPermitTreeNodesByMenu")
-	public void getPermitTreeNodesByMenu()
-	{
-		Menu po = service.getById(req.getLong("id"));
-		
-		List<Permit> permitData = permitService.get(null);
-		List<Object> treeNodes = new ArrayList<Object>();
-		
-		for(int i=0; i<permitData.size(); i++)
-		{
-			Permit o = permitData.get(i);
-			if(po.getM().containsKey("tc_permit_id") && o.getLong("id") == po.getLong("tc_permit_id"))
-			{
-				o.set("checked", true);
-			}
-			treeNodes.add(o.getM());
-		}
-		printJson(treeNodes);
-	}
+//	@RequestMapping("/getPermitTreeNodesByMenu")
+//	public void getPermitTreeNodesByMenu()
+//	{
+//		Menu po = service.getById(req.getLong("id"));
+//		
+//		List<Permit> permitData = permitService.get(null);
+//		List<Object> treeNodes = new ArrayList<Object>();
+//		
+//		for(int i=0; i<permitData.size(); i++)
+//		{
+//			Permit o = permitData.get(i);
+//			if(po.getM().containsKey("tc_permit_id") && o.getLong("id") == po.getLong("tc_permit_id"))
+//			{
+//				o.set("checked", true);
+//			}
+//			treeNodes.add(o.getM());
+//		}
+//		printJson(treeNodes);
+//	}
 }

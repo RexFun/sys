@@ -2,6 +2,7 @@
 <%@ include file="/common/inc_header.jsp"%>
 <!-- 主内容面板 -->
 <div class="content-wrapper">
+	<!-- Header ======================================================================================================= -->
 	<section class="content-header">
 		<h1>${param.menuName}<small>修改</small></h1>
 		<ol class="breadcrumb">
@@ -10,6 +11,7 @@
 			<li class="active">修改</li>
 		</ol>
 	</section>
+	<!-- Content ======================================================================================================= -->
 	<section class="content">
 		<div class="box box-default">
 			<div class="box-header with-border">
@@ -20,23 +22,35 @@
 			</div>
 			<div class="box-body">
 				<form class="dataForm" id="dataForm" role="form" action="upd2.action" method="post">
-					<div class="form-group"><label class="control-label" for="tc_code">菜单代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" validate validate-rule-required/></div>
-					<div class="form-group"><label class="control-label" for="tc_name">菜单名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" validate validate-rule-required/></div>
-					<div class="form-group"><label class="control-label" for="tc_url">菜单URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" value="${po.m.tc_url}"/></div>
-					<div class="form-group"><label class="control-label" for="tc_order">菜单排序号：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" value="${po.m.tc_order}" validate validate-rule-inputType="integer"/></div>
-					<div class="form-group"><label class="control-label" for="tc_permit_id">绑定权限：</label>
-						<input type="text" class="form-control input-sm" id="sel_permit" value="${po.m.tc_permit_name}"/>
+					<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" validate validate-rule-required/></div>
+					<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" validate validate-rule-required/></div>
+					<div class="form-group"><label class="control-label" for="tc_url">URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" value="${po.m.tc_url}"/></div>
+					<div class="form-group"><label class="control-label" for="tc_order">排序：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" value="${po.m.tc_order}" validate validate-rule-inputType="integer"/></div>
+					<div class="form-group"><label class="control-label" for="tc_app_id">应用：</label>
+						<input type="text" class="form-control input-sm" id="sel_app" value="${po.m.tc_app_name}[${po.m.tc_app_id}]"/>
+						<input type="hidden" class="form-control input-sm" id="tc_app_id" name="m['tc_app_id']" value="${po.m.tc_app_id}"/>
+					</div>
+					<div class="form-group"><label class="control-label" for="pid">PID：</label>
+						<input type="text" class="form-control input-sm" id="sel_menu" value="${po.m.tc_p_name}[${po.m.pid}]"/>
+						<input type="hidden" class="form-control input-sm" id="pid" name="m['pid']" value="${po.m.pid}"/>
+					</div>
+					<div class="form-group"><label class="control-label" for="tc_permit_id">权限：</label>
+						<input type="text" class="form-control input-sm" id="sel_permit" value="${po.m.tc_permit_name}[${po.m.tc_permit_id}]"/>
 						<input type="hidden" class="form-control input-sm" id="tc_permit_id" name="m['tc_permit_id']" value="${po.m.tc_permit_id}"/>
 					</div>
-					<div class="form-group"><label class="control-label" for="pid">父节点：</label>
-						<input type="text" class="form-control input-sm" id="sel_menu" value="${po.m.tc_p_name}"/>
-						<input type="hidden" class="form-control input-sm" id="pid" name="m['pid']" value="${po.m.pid}"/>
+					<div class="form-group"><label class="control-label" for="tc_level">级别：</label>
+						<select class="form-control input-sm" id="tc_level" name="m['tc_level']">
+							<option value="0">根节点</option>
+							<option value="1">一级节点</option>
+							<option value="2">次级节点</option>
+						</select>
 					</div>
 					<input type="hidden" name="m['id']" value="${po.m.id}">
 				</form>
 				<!-- modal -->
-				<div id="modal_sel1"></div>
-				<div id="modal_sel2"></div>
+				<div id="modal_sel_app"></div>
+				<div id="modal_sel_menu"></div>
+				<div id="modal_sel_permit"></div>
 			</div>
 			<div class="box-footer">
 				<button type="submit" class="btn btn-block btn-success btn-flat pull-right" id="dataFormSave"><i class="glyphicon glyphicon-floppy-save"></i></button>
@@ -62,12 +76,20 @@ $chok.form.callback = function(){
 /**********************************************************/
 /* zTree配置 */
 /**********************************************************/
+// appTree 的参数配置
+var appSetting = {
+	async: 
+	{
+		enable: true,
+		url:function(){return "${ctx}/dict/getAppTreeNodes.action?appId="+$("#tc_app_id").val();}
+	}
+};
 //menuTree 的参数配置
 var menuSetting = {
 	async: 
 	{
 		enable: true,
-		url:"getMenuTreeNodes.action?id=${po.m.pid}"
+		url:function(){return "${ctx}/dict/getMenuTreeNodes.action?menuId=${po.m.pid}&tc_app_id="+$("#tc_app_id").val();}
 	} 
 };
 // permitTree 的参数配置
@@ -75,42 +97,89 @@ var permitSetting = {
 	async: 
 	{
 		enable: true,
-		url:"getPermitTreeNodes.action?id=${po.m.tc_permit_id}"
+		url:function(){return "${ctx}/dict/getPermitTreeNodes.action?permitId=${po.m.tc_permit_id}&tc_app_id="+$("#tc_app_id").val();}
 	}
 };
-// zTree的初始化
+/**********************************************************/
+/* 全局函数 */
+/**********************************************************/
 $(function(){
 	$chok.view.fn.selectSidebarMenu("${param.menuId}","${param.menuName}");
 	// 返回列表页
 	$("#back").click(function(){
 		location.href = "get.action?"+$chok.view.fn.getUrlParams("${queryParams}");
 	});
-	
-    var s1 = $("#modal_sel1").ztreeSelectorModal({treeid:"tree_menu",
-    											  title:"请选择上级菜单节点",
-    											  setting:menuSetting,
-    											  callback:{
-    												  onConfirm:function(modalObj,rtnVal){
-    													  $("#sel_menu").val(rtnVal.vName);
-    													  $("#pid").val(rtnVal.vId);
-    												  }
-    											  }
-    });
-    var s2 = $("#modal_sel2").ztreeSelectorModal({treeid:"tree_permit",
-    											  title:"请选择权限节点",
-    											  setting:permitSetting,
-    											  callback:{
-    												  onConfirm:function(modalObj,rtnVal){
-    													  $("#sel_permit").val(rtnVal.vName);
-    													  $("#tc_permit_id").val(rtnVal.vId);
-    												  }
-    											  }
-    });
-    $("#sel_menu").click(function(){
-    	s1.modal("show");
-    });
-    $("#sel_permit").click(function(){
-    	s2.modal("show");
-    });
+	// 级别selection返回值
+	$("#tc_level").val("${po.m.tc_level}");
+	// 级别selection监听事件
+	$("#tc_level").change(function(){
+		if($(this).val()==0){
+			$("#pid").val(0);
+			$("#pid").attr("readonly",true);
+			$("#sel_menu").val("");
+			$("#sel_menu").attr("readonly",true);
+			
+			$("#tc_permit_id").val("0");
+			$("#tc_permit_id").attr("readonly",true);
+			$("#sel_permit").val("");
+			$("#sel_permit").attr("readonly",true);
+		}else{
+			$("#pid").val("");
+			$("#pid").attr("readonly",false);
+			$("#sel_menu").attr("readonly",false);
+			
+			$("#tc_permit_id").val("");
+			$("#tc_permit_id").attr("readonly",true);
+			$("#sel_permit").attr("readonly",true);
+		}
+	});
+	// 初始化所有modal_sel
+	var modal_sel_app = $("#modal_sel_app").ztreeSelectorModal({
+		treeid : "tree_app",
+		title : "绑定应用",
+		setting : appSetting,
+		callback : {
+			onConfirm : function(modalObj, rtnVal) {
+				$("#sel_app").val(rtnVal.vName);
+				$("#tc_app_id").val(rtnVal.vId);
+				// 置空父菜单与权限
+				$("#sel_menu").val("");
+				$("#pid").val("");
+				$("#sel_permit").val("");
+				$("#tc_permit_id").val("");
+			}
+		}
+	});
+	var modal_sel_menu = $("#modal_sel_menu").ztreeSelectorModal({
+		treeid : "tree_menu",
+		title : "绑定父菜单",
+		setting : menuSetting,
+		callback : {
+			onConfirm : function(modalObj, rtnVal) {
+				$("#sel_menu").val(rtnVal.vName);
+				$("#pid").val(rtnVal.vId);
+			}
+		}
+	});
+	var modal_sel_permit = $("#modal_sel_permit").ztreeSelectorModal({
+		treeid : "tree_permit",
+		title : "绑定权限",
+		setting : permitSetting,
+		callback : {
+			onConfirm : function(modalObj, rtnVal) {
+				$("#sel_permit").val(rtnVal.vName);
+				$("#tc_permit_id").val(rtnVal.vId);
+			}
+		}
+	});
+	$("#sel_app").focus(function() {
+		modal_sel_app.modal("show");
+	});
+	$("#sel_menu").focus(function() {
+		modal_sel_menu.modal("show");
+	});
+	$("#sel_permit").focus(function() {
+		modal_sel_permit.modal("show");
+	});
 });
 </script>

@@ -20,22 +20,21 @@
 			</div>
 			<div class="box-body">
 				<form class="dataForm" id="dataForm" role="form">
-					<div class="form-group"><label class="control-label" for="id">权限ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_code">权限代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_name">权限名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
-					<div class="form-group">
-						<label for="tc_type">权限类型：</label>
+					<div class="form-group"><label class="control-label" for="id">ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_url">URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" value="${po.m.tc_url}" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_order">排序：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" value="${po.m.tc_order}" readonly="readonly"/></div>
+					<div class="form-group"><label for="tc_type">类型：</label>
 						<select class="form-control input-sm" id="tc_type" name="m['tc_type']" readonly="readonly">
-							<option value="0">默认</option>
-							<option value="1">按钮</option>
+							<option value="0">应用</option>
+							<option value="1">菜单</option>
+							<option value="2">按钮</option>
+							<option value="3">请求</option>
 						</select>
 					</div>
-					<div class="form-group"><label class="control-label" for="tc_url">权限URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" value="${po.m.tc_url}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="tc_order">权限排序号：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" value="${po.m.tc_order}" readonly="readonly"/></div>
-					<div class="form-group"><label class="control-label" for="pid">父节点：</label>
-						<input type="text" class="form-control input-sm" value="${po.m.tc_p_name}" readonly="readonly"/>
-						<input type="hidden" class="form-control input-sm" id="pid" name="m['pid']" value="${po.m.pid}" readonly="readonly"/>
-					</div>
+					<div class="form-group"><label class="control-label" for="tc_app_name">应用：</label><input type="text" class="form-control input-sm" id="tc_app_name" name="m['tc_app_name']" value="${po.m.tc_app_name}[${po.m.tc_app_id}]" readonly="readonly"/></div>
+					<div class="form-group"><label class="control-label" for="tc_p_name">父节点：</label><input type="text" class="form-control input-sm" id="tc_p_name" name="m['tc_p_name']" value="${po.m.tc_p_name}[${po.m.pid}]" readonly="readonly"/></div>
 				</form>
 			</div>
 			<div class="box-footer">
@@ -57,7 +56,7 @@ $(function(){
 	$("#back").click(function(){
 		location.href = "get.action?"+$chok.view.fn.getUrlParams("${queryParams}");
 	});
-	// 权限类型selection返回值
+	// 类型selection返回值
 	$("#tc_type").val("${po.m.tc_type}");
 });
 </script>

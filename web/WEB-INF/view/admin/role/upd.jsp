@@ -24,8 +24,8 @@
 						<div class="col-md-6 column">
 							<fieldset>
 							<legend>基础信息</legend>
-								<div class="form-group"><label class="control-label" for="tc_code">角色代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" validate validate-rule-required/></div>
-								<div class="form-group"><label class="control-label" for="tc_name">角色名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" validate validate-rule-required/></div>
+								<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" validate validate-rule-required/></div>
+								<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" validate validate-rule-required/></div>
 								<input type="hidden" name="m['id']" value="${po.m.id}">
 								<input type="hidden" id="tc_permit_ids" name="m['tc_permit_ids']" value="${po.m.tc_permit_ids}">
 							</fieldset>

@@ -12,12 +12,12 @@ import chok.devwork.BaseDao;
 public class MenuDao extends BaseDao<Menu,Long>
 {
 	@Override
-	public Class getEntityClass()
+	public Class<Menu> getEntityClass()
 	{
 		return Menu.class;
 	}
 	
-	public List getByUserId(Map m)
+	public List<Menu> getByUserId(Map<String, Object> m)
 	{
 		return this.getSqlSession().selectList(getStatementName("getByUserId"), m);
 	}
