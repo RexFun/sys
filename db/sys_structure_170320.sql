@@ -16,6 +16,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `tb_app`
+--
+
+DROP TABLE IF EXISTS `tb_app`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_app` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tc_code` varchar(45) DEFAULT NULL,
+  `tc_name` varchar(45) DEFAULT NULL,
+  `tc_url` varchar(200) DEFAULT NULL,
+  `tc_status` varchar(1) DEFAULT NULL,
+  `tc_order` varchar(10) DEFAULT NULL,
+  `tc_permit_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `tb_menu`
 --
 
@@ -25,14 +44,16 @@ DROP TABLE IF EXISTS `tb_menu`;
 CREATE TABLE `tb_menu` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pid` bigint(20) DEFAULT NULL,
+  `tc_permit_id` bigint(20) DEFAULT NULL,
+  `tc_app_id` bigint(20) DEFAULT NULL,
   `tc_code` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_url` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_permit_id` bigint(20) DEFAULT NULL,
-  `tc_order` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tc_order` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
+  `tc_level` varchar(1) CHARACTER SET utf8 DEFAULT '1' COMMENT '级别：0->根节点；1->一级节点；2->次级节点',
   PRIMARY KEY (`id`),
   KEY `fk_permit` (`tc_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,14 +65,15 @@ DROP TABLE IF EXISTS `tb_permit`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_permit` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `pid` bigint(20) DEFAULT NULL,
+  `pid` bigint(20) DEFAULT '0',
+  `tc_app_id` bigint(20) DEFAULT NULL,
   `tc_code` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_type` int(11) DEFAULT NULL COMMENT '1:菜单权限\n2:按钮权限',
   `tc_url` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_order` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +105,7 @@ CREATE TABLE `tb_role_permit_mapping` (
   PRIMARY KEY (`id`),
   KEY `fk_permit` (`tc_permit_id`),
   KEY `fk_role` (`tc_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1038 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1153 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +140,7 @@ CREATE TABLE `tb_user_role_mapping` (
   PRIMARY KEY (`id`),
   KEY `fk_role` (`tc_role_id`),
   KEY `fk_user` (`tc_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,4 +266,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-20 17:39:42
+-- Dump completed on 2017-03-24 15:27:13
