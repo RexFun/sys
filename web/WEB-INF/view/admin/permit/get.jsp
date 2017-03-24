@@ -58,7 +58,7 @@
 				<div class="form-group">
 					<label for="f_tc_code">代号：</label><input type="text" class="form-control input-sm" id="f_tc_code"/>
 					<label for="f_tc_name">名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
-					<label for="f_tc_p_name">父节点名称：</label><input type="text" class="form-control input-sm" id="f_tc_p_name"/>
+					<label for="f_tc_p_name">父级名称：</label><input type="text" class="form-control input-sm" id="f_tc_p_name"/>
 					<label for="f_tc_app_id">应用：</label>
 					<select class="form-control input-sm" id="f_tc_app_id">
 						<option value="">全部</option>
@@ -133,9 +133,14 @@ $chok.view.get.config.tableColumns =
     {title:'类型', field:'m.tc_type_name', align:'center', valign:'middle', sortable:false},
     {title:'URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false},
     {title:'排序', field:'m.tc_order', align:'center', valign:'middle', sortable:false},
+    {title:'父级名称', field:'m.tc_p_name', align:'center', valign:'middle', sortable:false},
     {title:'应用', field:'m.tc_app_name', align:'center', valign:'middle', sortable:false}
 ];
-$chok.view.get.callback.delRows = function(){
+$chok.view.get.callback.delRows = function(result){
+	if(!result.success){
+		alert(result.msg);
+		return;
+	}
 	//zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
 	initTree();
 };

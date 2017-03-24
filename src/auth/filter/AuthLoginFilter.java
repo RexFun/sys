@@ -33,9 +33,9 @@ public class AuthLoginFilter implements Filter
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException 
 	{
 		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+		HttpServletResponse resp = (HttpServletResponse) response;
 		HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(req);
-		HttpServletResponseWrapper responseWraper = new HttpServletResponseWrapper(res);
+		HttpServletResponseWrapper responseWraper = new HttpServletResponseWrapper(resp);
 		try
 		{
 			User u = (User) req.getSession().getAttribute(AuthAction.SessionName_CurLoginUser);
@@ -44,11 +44,11 @@ public class AuthLoginFilter implements Filter
 			{
 				if (req.getHeader("x-requested-with") != null && req.getHeader("x-requested-with").equals("XMLHttpRequest")) 
 				{ // ajax请求，通过js跳转至登录页
-					res.setStatus(0); // 标记0，代表session超时
+					resp.setStatus(0); // 标记0，代表session超时
 				}
 				else
 				{ // 非ajax请求，通过后台跳转至登录页
-					res.sendRedirect(req.getContextPath() + "/login.jsp");
+					resp.sendRedirect(req.getContextPath() + "/login.jsp");
 				}
 				return;
 			}

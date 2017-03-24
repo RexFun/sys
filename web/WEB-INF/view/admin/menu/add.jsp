@@ -25,7 +25,7 @@
 					<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" validate validate-rule-required /></div>
 					<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" validate validate-rule-required /></div>
 					<div class="form-group"><label class="control-label" for="tc_url">URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']"/></div>
-					<div class="form-group"><label class="control-label" for="tc_order">排序：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" validate validate-rule-inputType="integer"/></div>
+					<div class="form-group"><label class="control-label" for="tc_order">排序：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']"/></div>
 					<div class="form-group"><label class="control-label" for="tc_app_id">应用：</label>
 						<input type="text" class="form-control input-sm" id="sel_app"/>
 						<input type="hidden" class="form-control input-sm" id="tc_app_id" name="m['tc_app_id']" />
@@ -125,8 +125,8 @@ $(function(){
 			$("#sel_menu").attr("readonly",false);
 			
 			$("#tc_permit_id").val("");
-			$("#tc_permit_id").attr("readonly",true);
-			$("#sel_permit").attr("readonly",true);
+			$("#tc_permit_id").attr("readonly",false);
+			$("#sel_permit").attr("readonly",false);
 		}
 	});
 	// 定义所有modal_sel

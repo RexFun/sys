@@ -60,6 +60,7 @@ public class RoleAction extends BaseController<Role>
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			result.setSuccess(false);
 			result.setMsg(e.getMessage());
 		}
@@ -112,24 +113,10 @@ public class RoleAction extends BaseController<Role>
 		printJson(result.getData());
 	}
 	
-//	@RequestMapping("/getPermitTreeNodes")
-//	public void getPermitTreeNodes()
-//	{
-//		List<Permit> resultData = permitService.get(null);
-//		List<Object> treeNodes = new ArrayList<Object>();
-//		for(Permit o : resultData)
-//		{
-//			treeNodes.add(o.getM());
-//		}
-//		printJson(treeNodes);
-//	}
-	
-	@RequestMapping("/getPermitTreeNodesByRole")
-	public void getPermitTreeNodesByRole()
+	@RequestMapping("/getPermitTreeNodesByRoleId")
+	public void getPermitTreeNodesByRoleId()
 	{
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("tc_role_id", req.getLong("id"));
-		List<Permit> rolePermitData = permitService.getByRoleId(m);
+		List<Permit> rolePermitData = permitService.getByRoleId(req.getLong("tc_role_id"));
 		List<Permit> permitData = permitService.get(null);
 		List<Object> treeNodes = new ArrayList<Object>();
 		

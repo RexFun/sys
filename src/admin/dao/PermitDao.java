@@ -18,9 +18,9 @@ public class PermitDao extends BaseDao<Permit,Long>
 		return Permit.class;
 	}
 	
-	public List getByRoleId(Map<String, Object> m)
+	public List getByRoleId(Long roleId)
 	{
-		return this.getSqlSession().selectList(getStatementName("getByRoleId"), m);
+		return this.getSqlSession().selectList(getStatementName("getByRoleId"), roleId);
 	}
 	
 	public List getBtnPermitByUserId(Long userId)

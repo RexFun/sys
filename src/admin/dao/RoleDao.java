@@ -18,8 +18,8 @@ public class RoleDao extends BaseDao<Role,Long>
 		return Role.class;
 	}
 	
-	public List getByUserId(Map<String, Object> m)
+	public List getByUserId(Long userId)
 	{
-		return this.getSqlSession().selectList(getStatementName("getByUserId"), m);
+		return this.getSqlSession().selectList(getStatementName("getByUserId"), userId);
 	}
 }

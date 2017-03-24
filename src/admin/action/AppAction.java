@@ -54,6 +54,7 @@ public class AppAction extends BaseController<App>
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			result.setSuccess(false);
 			result.setMsg(e.getMessage());
 		}

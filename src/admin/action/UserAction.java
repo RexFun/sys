@@ -1,7 +1,6 @@
 package admin.action;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +58,7 @@ public class UserAction extends BaseController<User>
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			result.setSuccess(false);
 			result.setMsg(e.getMessage());
 		}
@@ -114,6 +114,7 @@ public class UserAction extends BaseController<User>
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			result.setSuccess(false);
 			result.setMsg(e.getMessage());
 		}
@@ -152,12 +153,10 @@ public class UserAction extends BaseController<User>
 		printJson(result.getData());
 	}
 	
-	@RequestMapping("/getRoleTreeNodesByUser")
-	public void getRoleTreeNodesByUser()
+	@RequestMapping("/getRoleTreeNodesByUserId")
+	public void getRoleTreeNodesByUserId()
 	{
-		Map m = new HashMap();
-		m.put("tc_user_id", req.getLong("id"));
-		List<Role> userRoleData = roleService.getByUserId(m);
+		List<Role> userRoleData = roleService.getByUserId(req.getLong("tc_user_id"));
 		List<Role> roleData = roleService.get(null);
 		List<Object> treeNodes = new ArrayList<Object>();
 		

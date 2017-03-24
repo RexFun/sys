@@ -118,7 +118,7 @@ var setting =
 	async: 
 	{
 		enable: true,
-		url:"getPermitTreeNodesByRole.action?id=${po.m.id}"
+		url:"getPermitTreeNodesByRoleId.action?tc_role_id=${po.m.id}"
 	},
 	data: 
 	{

@@ -119,7 +119,7 @@ var setting =
 	async: 
 	{
 		enable: true,
-		url:"getRoleTreeNodesByUser.action?id=${po.m.id}"
+		url:"getRoleTreeNodesByUserId.action?tc_user_id=${po.m.id}"
 	},
 	data: 
 	{

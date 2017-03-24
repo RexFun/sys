@@ -24,8 +24,8 @@ function getGlobalHeight(type) {
 		return $(window).height() - 35;
 	}
 }
-function ajaxOnLoadError(status, data) {
-    if(status == '0') {  
+function ajaxOnLoadError(status) {
+    if(status=='0' || typeof(status)=="undefined") {  
         if (confirm('会话已过期, 请重新登录。')) {  
             window.location.href = $ctx+'/login.jsp';              
         }  

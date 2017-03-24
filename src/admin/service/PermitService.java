@@ -36,9 +36,9 @@ public class PermitService extends BaseService<Permit,Long>
 		}
 	}
 	
-	public List getByRoleId(Map<String, Object> m)
+	public List getByRoleId(Long roleId)
 	{
-		return permitDao.getByRoleId(m);
+		return permitDao.getByRoleId(roleId);
 	}
 	
 	public List getBtnPermitByUserId(Long userId)

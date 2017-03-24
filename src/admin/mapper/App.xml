@@ -15,7 +15,7 @@
 			       			#{m.tc_url},
 			       			#{m.tc_order},
 			       			#{m.tc_status},
-			       			#{m.tc_permit_id})  
+			       			<choose><when test="m.tc_permit_id != null and m.tc_permit_id != ''">#{m.tc_permit_id}</when><otherwise>null</otherwise></choose>)  
     </insert>  
 	
 	<delete id="del" parameterType="admin.entity.App">
@@ -29,7 +29,7 @@
 			   tc_url = #{m.tc_url},
 			   tc_order = #{m.tc_order},
 			   tc_status = #{m.tc_status},
-			   tc_permit_id = #{m.tc_permit_id}
+			   tc_permit_id = <choose><when test="m.tc_permit_id != null and m.tc_permit_id != ''">#{m.tc_permit_id}</when><otherwise>null</otherwise></choose>
 		 where id = #{m.id}
 	</update>
   	

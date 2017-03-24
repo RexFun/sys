@@ -1,7 +1,6 @@
 package admin.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,8 +85,8 @@ public class RoleService extends BaseService<Role,Long>
 		return po;
 	}
 	
-	public List getByUserId(Map<String, Object> m)
+	public List getByUserId(Long userId)
 	{
-		return roleDao.getByUserId(m);
+		return roleDao.getByUserId(userId);
 	}
 }
