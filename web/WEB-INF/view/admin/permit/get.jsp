@@ -84,7 +84,7 @@
 </form>
 <%@ include file="/common/inc_footer.jsp"%>
 <!-- ======================================================================================================= -->
-<%@ include file="/common/inc_js_btn_permit.jsp"%>
+<script type="text/javascript" src="/static/res/chok/js/chok.auth.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/res/ztree/css/zTreeStyle/zTreeStyle.css" />
 <script type="text/javascript" src="/static/res/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="/static/res/chok/js/chok.view.get.js"></script>
@@ -97,7 +97,7 @@ $(function() {
 	$chok.view.get.init.toolbar();
 	$chok.view.get.init.modalFormQuery();
 	$chok.view.get.init.table("${queryParams.f_page}","${queryParams.f_pageSize}");
-	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
+	$chok.auth.btn($g_menuPermitId,$g_btnJson);
 });
 /**********************************************************/
 /* 初始化配置 */
@@ -147,7 +147,7 @@ $chok.view.get.callback.delRows = function(result){
 $chok.view.get.callback.onLoadSuccess = function(){
 	//zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
 	initTree();
-	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
+	$chok.auth.btn($g_menuPermitId,$g_btnJson);
 };
 /**********************************************************/
 /* zTree配置 */

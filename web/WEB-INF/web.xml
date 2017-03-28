@@ -52,8 +52,63 @@
     	<filter-name>springCharacterEncodingFilter</filter-name>     
 	    <url-pattern>/*</url-pattern>     
 	</filter-mapping>
+	
+	<!-- sso登出过滤器 -->
+	<filter>
+		<filter-name>ssoLogoutFilter</filter-name>
+		<filter-class>auth.filter.SSOLogoutFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ssoLogoutFilter</filter-name>
+		<url-pattern>/auth/logout.action</url-pattern>
+	</filter-mapping>
+	<!-- sso登录过滤器 -->
+	<filter>
+		<filter-name>ssoLoginFilter</filter-name>
+		<filter-class>auth.filter.SSOLoginFilter</filter-class>
+		<init-param>
+			<param-name>ssoURL</param-name>     
+			<param-value>http://localhost:8585/sso</param-value>     
+		</init-param>
+		<init-param>
+			<param-name>ssoAuthURL</param-name>     
+			<param-value>http://localhost:8585/sso/auth</param-value>     
+		</init-param>
+		<init-param>
+			<param-name>ssoApiURL</param-name>     
+			<param-value>http://localhost:8585/sso/api</param-value>     
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ssoLoginFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping>
+	<!-- sso授权过滤器 -->
+	<filter>
+		<filter-name>ssoAuthFilter</filter-name>
+		<filter-class>auth.filter.SSOAuthFilter</filter-class>
+		<init-param>
+			<param-name>ssoURL</param-name>     
+			<param-value>http://localhost:8585/sso</param-value>     
+		</init-param>
+		<init-param>
+			<param-name>ssoApiURL</param-name>     
+			<param-value>http://localhost:8585/sso/api</param-value>     
+		</init-param>
+		<init-param>
+			<param-name>appId</param-name>     
+			<param-value>1</param-value>     
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ssoAuthFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping>
 	 
 	<!-- 自定义登录过滤器 -->
+	<!-- 
 	<filter>
 		<filter-name>authLoginFilter</filter-name>
 		<filter-class>auth.filter.AuthLoginFilter</filter-class>
@@ -63,7 +118,9 @@
 		<url-pattern>/admin/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 	</filter-mapping>
+	 -->
 	<!-- 自定义菜单权限过滤器 -->
+	<!-- 
 	<filter>
 		<filter-name>authPermitMenuFilter</filter-name>
 		<filter-class>auth.filter.AuthPermitMenuFilter</filter-class>
@@ -73,7 +130,9 @@
 		<url-pattern>/admin/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 	</filter-mapping>
+	 -->
 	<!-- 自定义action权限过滤器 -->
+	<!-- 
 	<filter>
 		<filter-name>authPermitActionFilter</filter-name>
 		<filter-class>auth.filter.AuthPermitActionFilter</filter-class>
@@ -83,7 +142,9 @@
 		<url-pattern>/admin/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 	</filter-mapping>
+	 -->
 	<!-- 自定义按钮权限过滤器 -->
+	<!-- 
 	<filter>
 		<filter-name>authPermitButtonFilter</filter-name>
 		<filter-class>auth.filter.AuthPermitButtonFilter</filter-class>
@@ -93,7 +154,7 @@
 		<url-pattern>/admin/*</url-pattern>
 		<url-pattern>/index.jsp</url-pattern>
 	</filter-mapping>
-
+ -->
     <!-- Spring MVC servlet -->  
     <servlet>  
         <servlet-name>springmvc</servlet-name>  

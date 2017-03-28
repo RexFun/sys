@@ -58,7 +58,7 @@
 </div>
 <%@ include file="/common/inc_footer.jsp"%>
 <!-- ======================================================================================================= -->
-<%@ include file="/common/inc_js_btn_permit.jsp"%>
+<script type="text/javascript" src="/static/res/chok/js/chok.auth.js"></script>
 <script type="text/javascript" src="/static/res/chok/js/chok.view.get.js"></script>
 <script type="text/javascript">
 /**********************************************************/
@@ -69,7 +69,7 @@ $(function() {
 	$chok.view.get.init.toolbar();
 	$chok.view.get.init.modalFormQuery();
 	$chok.view.get.init.table("${queryParams.f_page}","${queryParams.f_pageSize}");
-	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
+	$chok.auth.btn($g_menuPermitId,$g_btnJson);
 });
 /**********************************************************/
 /* 初始化配置 */
@@ -93,6 +93,6 @@ $chok.view.get.config.tableColumns =
 $chok.view.get.callback.delRows = function(){
 };
 $chok.view.get.callback.onLoadSuccess = function(){
-	initBtnPermit("${sessionScope.CUR_MENU_PERMIT_ID}");
+	$chok.auth.btn($g_menuPermitId,$g_btnJson);
 };
 </script>

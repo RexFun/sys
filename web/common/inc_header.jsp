@@ -1,19 +1,26 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="auth.action.AuthAction"%>
-<%@ page import="admin.entity.User"%>
+<%@ page import="auth.filter.SSOLoginFilter"%>
+<%@ page import="chok.sso.AuthUser"%>
 <%
-User o = (User)session.getAttribute(AuthAction.SessionName_CurLoginUser);
+AuthUser o = (AuthUser)session.getAttribute(SSOLoginFilter.LOGINER);
 String userId = o==null?"":o.getString("id");
 String account = o==null?"":o.getString("tc_code");
-String menuPermitJson = o==null?"":o.getString("menuPermitJson");
+String menuJson = o==null?"":o.getString("sso.menuJson");
+String btnJson = o==null?"":o.getString("sso.btnJson");
+request.setAttribute("authUser", o);
 %>
 <%@ include file="/common/inc_ctx.jsp"%>
 <%@ include file="/common/inc_css.jsp"%>
 <%@ include file="/common/inc_js.jsp"%>
 <script type="text/javascript">
+/* js 全局变量 **********************************************************/
+var $g_menuPermitId = "${param.menuPermitId}";
+var $g_menuJson = <%=menuJson%>;
+var $g_btnJson = <%=btnJson%>;
+/************************************************************************/
 $(function(){
 	// nav
-	$chok.nav.init(<%=menuPermitJson%>);
+	$chok.nav.init($g_menuJson);
 	// 导航菜单查询
 	$("#navSearchForm").submit(function(event) {
 		event.preventDefault();
@@ -23,7 +30,7 @@ $(function(){
 			{'menuName':$("#menuName").val()},
 		  	function(rv) {
 				if(rv.success){
-					$chok.nav.init(JSON.parse(rv.data.menuPermitJson));
+					$chok.nav.init(JSON.parse(rv.data.menuJson));
 				}else{
 					alert(data.msg);
 				}
@@ -56,7 +63,7 @@ $(function(){
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					<c:choose>
-						<c:when test="${sessionScope.CUR_LOGIN_USER==null}">
+						<c:when test="${authUser==null}">
 							<li><a href="/static/login.jsp"><i class="glyphicon glyphicon-log-in"></i>登录</a></li>
 						</c:when>
 						<c:otherwise>
@@ -70,7 +77,7 @@ $(function(){
 										<ul id="user-dropdown-menu" class="menu">
 											<li menuId="myinfo"><a href="${ctx}/admin/user/getMyInfo.action?id=<%=userId%>&menuName=个人资料"><i class="fa fa-user text-aqua"></i> <span>个人资料</span></a></li>
 											<li menuId="updpwd"><a href="${ctx}/admin/user/updPwd1.action?id=<%=userId%>&menuName=修改密码"><i class="glyphicon glyphicon-lock text-aqua"></i><span>修改密码</span></a></li>
-											<li menuId="loginout"><a href="${ctx}/auth/logout.action"><i class="glyphicon glyphicon-log-out text-red"></i><span>登出</span></a></li>
+											<li menuId="logout"><a href="${ctx}/auth/logout.action"><i class="glyphicon glyphicon-log-out text-red"></i><span>登出</span></a></li>
 										</ul>
 									</li>
 								</ul>
