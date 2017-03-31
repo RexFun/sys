@@ -68,15 +68,15 @@
 		<filter-class>auth.filter.SSOLoginFilter</filter-class>
 		<init-param>
 			<param-name>ssoURL</param-name>     
-			<param-value>http://localhost:8585/sso</param-value>     
+			<param-value>http://localhost:8080/sso</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ssoAuthURL</param-name>     
-			<param-value>http://localhost:8585/sso/auth</param-value>     
+			<param-value>http://localhost:8080/sso/auth</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ssoApiURL</param-name>     
-			<param-value>http://localhost:8585/sso/api</param-value>     
+			<param-value>http://localhost:8080/sso/api</param-value>     
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -90,15 +90,23 @@
 		<filter-class>auth.filter.SSOAuthFilter</filter-class>
 		<init-param>
 			<param-name>ssoURL</param-name>     
-			<param-value>http://localhost:8585/sso</param-value>     
+			<param-value>http://localhost:8080/sso</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ssoApiURL</param-name>     
-			<param-value>http://localhost:8585/sso/api</param-value>     
+			<param-value>http://localhost:8080/sso/api</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>appId</param-name>     
 			<param-value>1</param-value>     
+		</init-param>
+		<init-param>
+			<param-name>appId</param-name>     
+			<param-value>1</param-value>     
+		</init-param>
+		<init-param>
+			<param-name>ignoreURL</param-name>     
+			<param-value>/index.jsp</param-value>     
 		</init-param>
 	</filter>
 	<filter-mapping>
