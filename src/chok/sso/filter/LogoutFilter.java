@@ -1,4 +1,4 @@
-package auth.filter;
+package chok.sso.filter;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SSOLogoutFilter implements Filter
+public class LogoutFilter implements Filter
 {
 	static Logger log = LoggerFactory.getLogger("sso.logout");
 
@@ -35,13 +35,13 @@ public class SSOLogoutFilter implements Filter
 		try
 		{
 			HttpSession session = req.getSession();
-			session.removeAttribute(SSOLoginFilter.LOGINER);
-			session.removeAttribute(SSOLoginFilter.TICKET);
+			session.removeAttribute(LoginFilter.LOGINER);
+			session.removeAttribute(LoginFilter.TICKET);
 			session.invalidate();
 
 			resp.setHeader("P3P", "CP=CAO PSA OUR");
 			resp.setHeader("Access-Control-Allow-Origin", "*");
-			resp.sendRedirect(SSOLoginFilter.logoutURL+"?service="+path);
+			resp.sendRedirect(LoginFilter.logoutURL+"?service="+path);
 			return;
 		}
 		catch(Exception ex)

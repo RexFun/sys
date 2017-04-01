@@ -1,4 +1,4 @@
-package auth.filter;
+package chok.sso.filter;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -26,7 +26,7 @@ import chok.util.http.HttpAction;
 import chok.util.http.HttpResult;
 import chok.util.http.HttpUtil;
 
-public class SSOLoginFilter implements Filter
+public class LoginFilter implements Filter
 {
 	static Logger log = LoggerFactory.getLogger("sso.login");
 	

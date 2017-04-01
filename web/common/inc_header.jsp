@@ -1,8 +1,8 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="auth.filter.SSOLoginFilter"%>
 <%@ page import="chok.sso.AuthUser"%>
+<%@ page import="chok.sso.filter.LoginFilter"%>
 <%
-AuthUser o = (AuthUser)session.getAttribute(SSOLoginFilter.LOGINER);
+AuthUser o = (AuthUser)session.getAttribute(LoginFilter.LOGINER);
 String userId = o==null?"":o.getString("id");
 String account = o==null?"":o.getString("tc_code");
 String menuJson = o==null?"":o.getString("sso.menuJson");

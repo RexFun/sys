@@ -1,4 +1,4 @@
-package auth.filter;
+package chok.sso.filter;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import chok.util.http.HttpAction;
 import chok.util.http.HttpResult;
 import chok.util.http.HttpUtil;
 
-public class SSOAuthFilter implements Filter 
+public class AuthFilter implements Filter 
 {
 	static Logger log = LoggerFactory.getLogger("sso.auth");
 	
@@ -76,7 +76,7 @@ public class SSOAuthFilter implements Filter
 		}
 		try
 		{
-			AuthUser u = (AuthUser)session.getAttribute(SSOLoginFilter.LOGINER);
+			AuthUser u = (AuthUser)session.getAttribute(LoginFilter.LOGINER);
 			if (!u.getM().containsKey(menuJson) || u.getString(menuJson)==null) u.set(menuJson, getMenuJson(u));
 			if(log.isInfoEnabled()) log.info(u.getString("tc_code")+"'s menuJson：" + u.getString(menuJson));
 			if (!u.getM().containsKey(btnJson) || u.getString(btnJson)==null) u.set(btnJson, getBtnJson(u));
@@ -161,10 +161,8 @@ public class SSOAuthFilter implements Filter
 	{
 		boolean tag = false;
 		List<Map<String, Object>> actList=JSON.parseObject(u.get(actJson).toString(), new TypeReference<List<Map<String,Object>>>(){});
-		System.out.println(actList.size());
 		for(int i=0; i<actList.size(); i++)
 		{
-			System.out.println(actList.get(i));
 			if(actionURL.equals(actList.get(i).get("tc_url").toString()))
 			{
 				tag = true;
