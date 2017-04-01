@@ -93,11 +93,11 @@
 /* 全局函数 */
 /**********************************************************/
 $(function() {
-	$chok.view.fn.selectSidebarMenu("${param.menuId}","${param.menuName}");
+	$chok.view.fn.selectSidebarMenu("${param.menuId}","${param.menuPermitId}","${param.menuName}");
 	$chok.view.get.init.toolbar();
 	$chok.view.get.init.modalFormQuery();
 	$chok.view.get.init.table("${queryParams.f_page}","${queryParams.f_pageSize}");
-	$chok.auth.btn($g_menuPermitId,$g_btnJson);
+	$chok.auth.btn($chok.view.menuPermitId,$g_btnJson);
 });
 /**********************************************************/
 /* 初始化配置 */
@@ -147,7 +147,7 @@ $chok.view.get.callback.delRows = function(result){
 $chok.view.get.callback.onLoadSuccess = function(){
 	//zTreeObj.reAsyncChildNodes(null, "refresh"); // 刷新zTree
 	initTree();
-	$chok.auth.btn($g_menuPermitId,$g_btnJson);
+	$chok.auth.btn($chok.view.menuPermitId,$g_btnJson);
 };
 /**********************************************************/
 /* zTree配置 */

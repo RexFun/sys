@@ -102,7 +102,7 @@ var permitSetting = {
 /* 全局函数 */
 /**********************************************************/
 $(function(){
-	$chok.view.fn.selectSidebarMenu("${param.menuId}","${param.menuName}");
+	$chok.view.fn.selectSidebarMenu("${param.menuId}","${param.menuPermitId}","${param.menuName}");
 	// 返回列表页
 	$("#back").click(function(){
 		location.href = "get.action?"+$chok.view.fn.getUrlParams("${queryParams}");

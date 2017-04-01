@@ -2,8 +2,10 @@ package auth.filter;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 
-import chok.devwork.BaseModel;
 import chok.sso.AuthUser;
 import chok.util.http.HttpAction;
 import chok.util.http.HttpResult;
@@ -33,8 +34,10 @@ public class SSOAuthFilter implements Filter
 	
 	private static String ssoURL = "";// SSO项目根地址
 	private static String ssoApiURL = "";// SSO接口地址
-	private static String ignoreURL = "";// 忽略地址
 	private static String appId = "";// SSO client端ID
+	private static Set<String> ignoreURLSet = new HashSet<String>();// 无需验证页面
+	private static String isNeedChkAct = "";// 是否需要验证action权限
+	
 	private final static String menuJson = "sso.menuJson";// 
 	public final static String btnJson = "sso.btnJson";// 
 	public final static String actJson = "sso.actJson";// 
@@ -46,8 +49,13 @@ public class SSOAuthFilter implements Filter
 		{
 			ssoURL = String.valueOf(config.getInitParameter("ssoURL")).trim();
 			ssoApiURL = String.valueOf(config.getInitParameter("ssoApiURL")).trim();
-			ignoreURL = String.valueOf(config.getInitParameter("ignoreURL")).trim();
 			appId = String.valueOf(config.getInitParameter("appId")).trim();
+			
+			String ignoreURL = String.valueOf(config.getInitParameter("ignoreURL")).trim();
+			ignoreURLSet.clear();
+			splitToSet(ignoreURL, ignoreURLSet);
+
+			isNeedChkAct = String.valueOf(config.getInitParameter("isNeedChkAct")).trim();
 		}
 		catch(Exception e)
 		{
@@ -61,17 +69,43 @@ public class SSOAuthFilter implements Filter
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-		String actionURL = req.getRequestURI().substring(req.getContextPath().length());
+		String relativeURI = req.getRequestURI().trim();// 相对地址
+		if(req.getContextPath().length() > 0)
+		{
+			relativeURI = relativeURI.replaceFirst(req.getContextPath(), "");
+		}
 		try
 		{
 			AuthUser u = (AuthUser)session.getAttribute(SSOLoginFilter.LOGINER);
 			if (!u.getM().containsKey(menuJson) || u.getString(menuJson)==null) u.set(menuJson, getMenuJson(u));
+			if(log.isInfoEnabled()) log.info(u.getString("tc_code")+"'s menuJson：" + u.getString(menuJson));
 			if (!u.getM().containsKey(btnJson) || u.getString(btnJson)==null) u.set(btnJson, getBtnJson(u));
+			if(log.isInfoEnabled()) log.info(u.getString("tc_code")+"'s btnJson：" + u.getString(btnJson));
 			if (!u.getM().containsKey(actJson) || u.getString(actJson)==null) u.set(actJson, getActJson(u));
+			if(log.isInfoEnabled()) log.info(u.getString("tc_code")+"'s actJson：" + u.getString(actJson));
 			
-			if(!chkAct(actionURL, u))
+			if(isNeedChkAct.equals("1"))
 			{
-				resp.getWriter().println("没有此操作权限！");
+				if(isIgnoreURL(relativeURI))
+				{
+					chain.doFilter(request, response);
+					return;
+				}
+				if(isAccess(relativeURI, u))
+				{
+					chain.doFilter(request, response);
+					return;
+				}
+				// 没权限
+				if (req.getHeader("x-requested-with") != null && req.getHeader("x-requested-with").equals("XMLHttpRequest")) 
+				{ // ajax请求
+					resp.setContentType("text/html;charset=UTF-8"); 
+					resp.getWriter().print("0:操作失败，没有权限！");
+				}
+				else
+				{ // 非ajax请求
+					resp.sendRedirect(req.getContextPath() + "/noaccess.jsp"); // 无权限访问，跳转页面
+				}
 				return;
 			}
 			chain.doFilter(request, response);
@@ -117,17 +151,51 @@ public class SSOAuthFilter implements Filter
 		return r.getData();
 	}
 	
-	public boolean chkAct(String actionURL, AuthUser u)
+	/**
+	 * 验证action访问权限
+	 * @param actionURL
+	 * @param u 当前会话用户对象
+	 * @return true 有权限，false 无权限
+	 */
+	public boolean isAccess(String actionURL, AuthUser u)
 	{
+		boolean tag = false;
 		List<Map<String, Object>> actList=JSON.parseObject(u.get(actJson).toString(), new TypeReference<List<Map<String,Object>>>(){});
 		System.out.println(actList.size());
 		for(int i=0; i<actList.size(); i++)
 		{
 			System.out.println(actList.get(i));
-			if(actionURL.equals(actList.get(i).get("tc_url").toString())){
-				return true;
+			if(actionURL.equals(actList.get(i).get("tc_url").toString()))
+			{
+				tag = true;
 			}
 		}
+		return tag;
+	}
+	
+	/**
+	 * 判断是否为不处理的页面
+	 * @param uri 本地相对地址
+	 * @return true 不用进行权限判断，false 要进行权限判断
+	 */
+	private static boolean isIgnoreURL(String url)
+	{
+		if(ignoreURLSet.contains(url)) return true;
 		return false;
+	}
+	
+	private static void splitToSet(String str, Set<String> set)
+	{
+		if(str != null && str.length() > 0)
+		{
+			String[] values = str.trim().split(",");
+			for(String value : values)
+			{
+				if(value.length() > 0)
+				{
+					set.add(value.trim());
+				}
+			}
+		}
 	}
 }

@@ -14,7 +14,6 @@ request.setAttribute("authUser", o);
 <%@ include file="/common/inc_js.jsp"%>
 <script type="text/javascript">
 /* js 全局变量 **********************************************************/
-var $g_menuPermitId = "${param.menuPermitId}";
 var $g_menuJson = <%=menuJson%>;
 var $g_btnJson = <%=btnJson%>;
 /************************************************************************/
