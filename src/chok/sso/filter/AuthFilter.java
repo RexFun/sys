@@ -77,6 +77,7 @@ public class AuthFilter implements Filter
 		try
 		{
 			AuthUser u = (AuthUser)session.getAttribute(LoginFilter.LOGINER);
+			u.set("appId", appId);
 			if (!u.getM().containsKey(menuJson) || u.getString(menuJson)==null) u.set(menuJson, getMenuJson(u));
 			if(log.isInfoEnabled()) log.info(u.getString("tc_code")+"'s menuJson：" + u.getString(menuJson));
 			if (!u.getM().containsKey(btnJson) || u.getString(btnJson)==null) u.set(btnJson, getBtnJson(u));

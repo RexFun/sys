@@ -3,6 +3,7 @@
 <%@ page import="chok.sso.filter.LoginFilter"%>
 <%
 AuthUser o = (AuthUser)session.getAttribute(LoginFilter.LOGINER);
+String appId = o==null?"":o.getString("appId");
 String userId = o==null?"":o.getString("id");
 String account = o==null?"":o.getString("tc_code");
 String menuJson = o==null?"":o.getString("sso.menuJson");
@@ -26,13 +27,9 @@ $(function(){
 		var url = $("#navSearchForm").attr('action');
 		$.post(
 			url, 
-			{'menuName':$("#menuName").val()},
+			{'tc_name':$("#menuName").val(), "tc_user_id":<%=userId%>, "tc_app_id":<%=appId%>},
 		  	function(rv) {
-				if(rv.success){
-					$chok.nav.init(JSON.parse(rv.data.menuJson));
-				}else{
-					alert(data.msg);
-				}
+				$chok.nav.init(JSON.parse(rv));
 			}
 		);
 	});
@@ -93,7 +90,7 @@ $(function(){
 	<aside class="main-sidebar">
 		<section class="sidebar">
 			<!-- 菜单搜索form -->
-			<form id="navSearchForm" action="${pageContext.request.contextPath}/auth/getNavMenu.action" method="get" class="sidebar-form">
+			<form id="navSearchForm" action="${ctx}/admin/home/searchMenu.action" method="get" class="sidebar-form">
 				<div class="input-group">
 					<input type="text" id="menuName" name="q" class="form-control" placeholder="Search..."/>
 					<span class="input-group-btn">
