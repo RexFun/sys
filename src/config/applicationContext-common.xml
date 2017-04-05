@@ -26,8 +26,6 @@
 		  如：auth/action/LoginAction.java-->
 	<context:component-scan base-package="admin.service" />
 	<context:component-scan base-package="admin.dao" />
-	<context:component-scan base-package="auth.service" />
-	<context:component-scan base-package="auth.dao" />
 	
 	<!-- properties -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
