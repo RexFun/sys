@@ -11,8 +11,6 @@ String btnJson = o==null?"":o.getString("sso.btnJson");
 request.setAttribute("authUser", o);
 %>
 <%@ include file="/common/inc_ctx.jsp"%>
-<%@ include file="/common/inc_css.jsp"%>
-<%@ include file="/common/inc_js.jsp"%>
 <script type="text/javascript">
 /* js 全局变量 **********************************************************/
 var $g_menuJson = <%=menuJson%>;
@@ -48,8 +46,8 @@ $(function(){
 	<header class="main-header">
 		<!-- Logo -->
 		<a href="javascript:void(0);return false;" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>A</b>SYS</span> <!-- logo for regular state and mobile devices -->
-			<span class="logo-lg"><b>Admin</b>SYSTEM</span>
+			<span class="logo-mini"><b>O</b>SYS</span> <!-- logo for regular state and mobile devices -->
+			<span class="logo-lg"><b>Origami</b>SYSTEM</span>
 		</a>
 		<!-- 顶部导航栏 -->
 		<nav class="navbar navbar-static-top">

@@ -14,3 +14,8 @@ request.setAttribute("ctx", ctx);
 <!-- 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
  -->
+<%@ include file="/common/inc_css.html"%>
+<%@ include file="/common/inc_js.html"%>
+<script type="text/javascript">
+var $ctx="${ctx}";
+</script>
