@@ -24,7 +24,6 @@
 				<form class="dataForm" id="dataForm" role="form" action="upd2.action" method="post">
 					<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" validate validate-rule-required/></div>
 					<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" validate validate-rule-required/></div>
-					<div class="form-group"><label class="control-label" for="tc_url">URL：</label><input type="text" class="form-control input-sm" id="tc_url" name="m['tc_url']" value="${po.m.tc_url}"/></div>
 					<div class="form-group"><label class="control-label" for="tc_order">排序：</label><input type="text" class="form-control input-sm" id="tc_order" name="m['tc_order']" value="${po.m.tc_order}"/></div>
 					<div class="form-group"><label class="control-label" for="tc_app_id">应用：</label>
 						<input type="text" class="form-control input-sm" id="sel_app" value="${po.m.tc_app_name}[${po.m.tc_app_id}]"/>

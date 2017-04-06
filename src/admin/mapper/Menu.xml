@@ -9,7 +9,6 @@
        						 tc_app_id, 
        						 tc_code, 
        						 tc_name, 
-       						 tc_url, 
        						 tc_order,
        						 tc_level) 
 			       	 values (<choose><when test="m.pid != null and m.pid != ''">#{m.pid}</when><otherwise>0</otherwise></choose>,
@@ -17,7 +16,6 @@
 			       			 <choose><when test="m.tc_app_id != null and m.tc_app_id != ''">#{m.tc_app_id}</when><otherwise>null</otherwise></choose>,
 			       			 #{m.tc_code},
 			       			 #{m.tc_name},
-			       			 #{m.tc_url},
 			       			 #{m.tc_order},
 			       			 #{m.tc_level})  
     </insert>  
@@ -33,7 +31,6 @@
 			   tc_app_id = <choose><when test="m.tc_app_id != null and m.tc_app_id != ''">#{m.tc_app_id}</when><otherwise>null</otherwise></choose>,
 			   tc_code = #{m.tc_code},
 			   tc_name = #{m.tc_name},
-			   tc_url = #{m.tc_url},
 			   tc_order = #{m.tc_order},
 			   tc_level = #{m.tc_level}
 		 where id = #{m.id}
@@ -56,7 +53,7 @@
 	</resultMap>
   	
 	<sql id="columns">
-		t.id, t.pid, t.tc_permit_id, t.tc_app_id, t.tc_code, t.tc_name, t.tc_url, t.tc_order, t.tc_level, case t.tc_level when 0 then '根节点' when 1 then '一级节点' else '次级节点' end tc_level_name
+		t.id, t.pid, t.tc_permit_id, t.tc_app_id, t.tc_code, t.tc_name, t1.tc_url, t.tc_order, t.tc_level, case t.tc_level when 0 then '根节点' when 1 then '一级节点' else '次级节点' end tc_level_name
 	</sql>
 	
 	<sql id="page">
