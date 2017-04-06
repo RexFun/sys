@@ -91,15 +91,6 @@
 		<include refid="page" />
 	</select>
 	
-	<select id="getByUserId" resultType="list" resultMap="result">
-		select <include refid="columns"/>  from tb_menu t
-		 inner join tb_role_permit_mapping t1 on t.tc_permit_id=t1.tc_permit_id
-		 inner join tb_user_role_mapping t2 on t1.tc_role_id=t2.tc_role_id and t2.tc_user_id=#{tc_user_id}
-		 <include refid="dynamicWhere" />
-		 group by t.id
-		 order by t.tc_order
-	</select>
-	
 	<select id="getCount" resultType="int">
 		select count(1) from tb_menu t
 		  left join tb_menu tt on t.pid = tt.id

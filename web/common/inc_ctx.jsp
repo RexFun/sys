@@ -1,7 +1,11 @@
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="chok.util.PropertiesUtil" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 String ctx = request.getContextPath();
+String imagePath = PropertiesUtil.getImagePath();
 request.setAttribute("ctx", ctx);
+request.setAttribute("imagePath", imagePath);
 %>
 <!DOCTYPE html>
 <html>
@@ -14,8 +18,8 @@ request.setAttribute("ctx", ctx);
 <!-- 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
  -->
-<%@ include file="/common/inc_css.html"%>
-<%@ include file="/common/inc_js.html"%>
+<%@ include file="/common/inc_css.jsp"%>
+<%@ include file="/common/inc_js.jsp"%>
 <script type="text/javascript">
 var $ctx="${ctx}";
 </script>
