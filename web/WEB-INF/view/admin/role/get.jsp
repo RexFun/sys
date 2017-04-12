@@ -87,8 +87,26 @@ $chok.view.get.config.urlParams = function(){
 $chok.view.get.config.tableColumns = 
 [
     {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
-    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
-    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false}
+    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'代号',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    },
+    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'名称',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    }
 ];
 $chok.view.get.callback.delRows = function(){
 };

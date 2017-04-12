@@ -58,18 +58,21 @@ public class UserService extends BaseService<User,Long>
 	public void upd(User po)
 	{
 		userDao.upd(po);
-		// 清空旧记录
-		userRoleMappingDao.delByUserId(po.getLong("id"));
-		// 插入系统用户角色表
-		if (po.get("tc_role_ids").toString().length()<1) return;
-		Long tcUserId = po.getLong("id");
-		Long[] tcRoleIds = CollectionUtil.strToLongArray(po.get("tc_role_ids").toString(), ",");
-		for(Long tcRoleId : tcRoleIds)
+		if(po.get("tc_role_ids")!=null)
 		{
-			UserRoleMapping o = new UserRoleMapping();
-			o.set("tc_user_id", tcUserId);
-			o.set("tc_role_id", tcRoleId);
-			userRoleMappingDao.add(o);
+			// 清空旧记录
+			userRoleMappingDao.delByUserId(po.getLong("id"));
+			// 插入系统用户角色表
+			if (po.get("tc_role_ids").toString().length()<1) return;
+			Long tcUserId = po.getLong("id");
+			Long[] tcRoleIds = CollectionUtil.strToLongArray(po.get("tc_role_ids").toString(), ",");
+			for(Long tcRoleId : tcRoleIds)
+			{
+				UserRoleMapping o = new UserRoleMapping();
+				o.set("tc_user_id", tcUserId);
+				o.set("tc_role_id", tcRoleId);
+				userRoleMappingDao.add(o);
+			}
 		}
 	}
 	

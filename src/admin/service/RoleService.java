@@ -62,18 +62,21 @@ public class RoleService extends BaseService<Role,Long>
 	public void upd(Role po)
 	{
 		roleDao.upd(po);
-		// 清空旧记录
-		rolePermitMappingDao.delByRoleId(po.getLong("id"));
-		// 插入系统角色权限表
-		if (po.get("tc_permit_ids").toString().length()<1) return;
-		Long tcRoleId = po.getLong("id");
-		Long[] tcPermitIds = CollectionUtil.strToLongArray(po.get("tc_permit_ids").toString(), ",");
-		for(Long tcPermitId : tcPermitIds)
+		if(po.get("tc_permit_ids")!=null)
 		{
-			RolePermitMapping o = new RolePermitMapping();
-			o.set("tc_role_id", tcRoleId);
-			o.set("tc_permit_id", tcPermitId);
-			rolePermitMappingDao.add(o);
+			// 清空旧记录
+			rolePermitMappingDao.delByRoleId(po.getLong("id"));
+			// 插入系统角色权限表
+			if (po.get("tc_permit_ids").toString().length()<1) return;
+			Long tcRoleId = po.getLong("id");
+			Long[] tcPermitIds = CollectionUtil.strToLongArray(po.get("tc_permit_ids").toString(), ",");
+			for(Long tcPermitId : tcPermitIds)
+			{
+				RolePermitMapping o = new RolePermitMapping();
+				o.set("tc_role_id", tcRoleId);
+				o.set("tc_permit_id", tcPermitId);
+				rolePermitMappingDao.add(o);
+			}
 		}
 	}
 	

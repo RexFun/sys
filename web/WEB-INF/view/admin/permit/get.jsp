@@ -128,13 +128,46 @@ $chok.view.get.config.tableColumns =
 [
 	{title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
     {title:'PID', field:'m.pid', align:'center', valign:'middle', sortable:false},
-	{title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
-    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false},
+	{title:'代号', field:'m.tc_code', align:'left', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'代号',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    },
+    {title:'名称', field:'m.tc_name', align:'left', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'名称',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+	},
     {title:'类型', field:'m.tc_type_name', align:'center', valign:'middle', sortable:false},
-    {title:'URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false},
-    {title:'排序', field:'m.tc_order', align:'center', valign:'middle', sortable:false},
-    {title:'父级名称', field:'m.tc_p_name', align:'center', valign:'middle', sortable:false},
-    {title:'应用', field:'m.tc_app_name', align:'center', valign:'middle', sortable:false}
+    {title:'URL', field:'m.tc_url', align:'left', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'URL'
+    	}
+    },
+    {title:'排序', field:'m.tc_order', align:'left', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'排序',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    },
+    {title:'父级名称', field:'m.tc_p_name', align:'left', valign:'middle', sortable:false},
+    {title:'应用', field:'m.tc_app_name', align:'left', valign:'middle', sortable:false}
 ];
 $chok.view.get.callback.delRows = function(result){
 	if(!result.success){

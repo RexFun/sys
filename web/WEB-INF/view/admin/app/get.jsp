@@ -102,11 +102,57 @@ $chok.view.get.config.tableColumns =
 [
     {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
     {title:'权限', field:'m.tc_permit_id', align:'center', valign:'middle', sortable:false},
-    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false},
-    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false},
-    {title:'URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false},
-    {title:'排序', field:'m.tc_order', align:'center', valign:'middle', sortable:false},
-    {title:'状态', field:'m.tc_status_name', align:'center', valign:'middle', sortable:false}
+    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'代号',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    },
+    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'名称',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    },
+    {title:'URL', field:'m.tc_url', align:'center', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'URL',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    },
+    {title:'排序', field:'m.tc_order', align:'center', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'text',
+	    	title:'排序',
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    },
+    {title:'状态', field:'m.tc_status', align:'center', valign:'middle', sortable:false, 
+    	editable:
+    	{
+	    	type:'select',
+	    	title:'状态',
+	    	source:[{value:"1",text:"启用"},{value:"0",text:"禁用"}],
+	    	validate: function(value){
+	            return $chok.validator.checkEditable("required", null, value, null);
+	    	}
+    	}
+    }
 ];
 $chok.view.get.callback.delRows = function(){
 };
