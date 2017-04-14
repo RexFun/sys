@@ -2,6 +2,7 @@
 <%@ include file="/common/inc_ctx.jsp"%>
 </head>
 <body>
+test
 <h1>权限未开通。 <a href="javascript:void(0);location.reload();">刷新</a></h1>
 </body>
 </html>
