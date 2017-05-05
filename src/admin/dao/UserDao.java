@@ -10,7 +10,7 @@ import chok.devwork.BaseDao;
 public class UserDao extends BaseDao<User,Long>
 {
 	@Override
-	public Class getEntityClass()
+	public Class<User> getEntityClass()
 	{
 		return User.class;
 	}
