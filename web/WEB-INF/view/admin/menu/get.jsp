@@ -28,6 +28,12 @@
 						</div>
 						<!-- DataTable ======================================================================================================= -->
 						<table id="tb_list"></table>
+						<!-- context menu
+						======================================================================================================= -->
+						<ul id="tb_ctx_menu" class="dropdown-menu">
+						    <li data-item="upd" class="upd" pbtnId="pbtn_upd"><a><i class="glyphicon glyphicon-edit"></i></a></li>
+						    <li data-item="getById" class="getById" pbtnId="pbtn_getById"><a><i class="glyphicon glyphicon-info-sign"></i></a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
