@@ -91,8 +91,6 @@
 <%@ include file="/common/inc_footer.jsp"%>
 <!-- ======================================================================================================= -->
 <script type="text/javascript" src="/static/res/chok/js/chok.auth.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/res/ztree/css/zTreeStyle/zTreeStyle.css" />
-<script type="text/javascript" src="/static/res/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="/static/res/chok/js/chok.view.get.js"></script>
 <script type="text/javascript">
 /**********************************************************/

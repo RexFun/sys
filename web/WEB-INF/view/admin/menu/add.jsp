@@ -58,8 +58,6 @@
 </div>
 <%@ include file="/common/inc_footer.jsp"%>
 <!-- ======================================================================================================= -->
-<link rel="stylesheet" type="text/css" href="/static/res/ztree/css/zTreeStyle/zTreeStyle.css" />
-<script type="text/javascript" src="/static/res/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="/static/res/chok/js/chok.view.add.js"></script>
 <script type="text/javascript">
 /**********************************************************/
@@ -94,7 +92,7 @@ var permitSetting = {
 	async: 
 	{
 		enable: true,
-		url:function(){return "${ctx}/dict/getPermitTreeNodes.action?tc_app_id="+$("#tc_app_id").val();}
+		url:function(){return "${ctx}/dict/getPermitTreeNodes.action?tc_type=1&tc_app_id="+$("#tc_app_id").val();}
 	}
 };
 /**********************************************************/
