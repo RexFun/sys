@@ -133,6 +133,7 @@ $chok.view.get.config.tableColumns =
     	{
 	    	type:'text',
 	    	title:'URL',
+	    	emptytext:'_',
 	    	validate: function(value){
 	            return $chok.validator.checkEditable("required", null, value, null);
 	    	}
