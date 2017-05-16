@@ -5,7 +5,7 @@
 <script type="text/javascript" src="/static/res/jquery/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/static/res/jquery/third/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="/static/res/jquery/customize/fn/jquery.customize.fn.resize.js"></script>
-<script type="text/javascript" src="/static/res/jquery/customize/plugin/jquery.customize.plugin.ztreeSelectorModal.js"></script>
+<script type="text/javascript" src="/static/res/jquery/customize/plugin/jquery.customize.plugin.ZtreeSelectModal.js"></script>
 <script type="text/javascript" src="/static/res/bs/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/res/bs/js/bootstrap-table.js"></script>
 <script type="text/javascript" src="/static/res/bs/js/bootstrap-table-zh-CN.min.js"></script>

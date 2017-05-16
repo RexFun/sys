@@ -96,7 +96,7 @@ $(function(){
 	// 类型selection返回值
 	$("#tc_type").val("${po.m.tc_type}");
 	// 初始化所有modal_sel
-	var modal_sel_app = $("#modal_sel_app").ztreeSelectorModal({
+	var modal_sel_app = $("#modal_sel_app").ZtreeSelectModal({
 		treeid : "tree_app",
 		title : "绑定应用",
 		setting : appSetting,
@@ -107,7 +107,7 @@ $(function(){
 			}
 		}
 	});
-	var modal_sel_permit = $("#modal_sel_permit").ztreeSelectorModal({
+	var modal_sel_permit = $("#modal_sel_permit").ZtreeSelectModal({
 		treeid : "tree_permit",
 		title : "绑定父节点",
 		setting : permitSetting,

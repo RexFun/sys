@@ -75,7 +75,7 @@ $(function(){
 		location.href = "get.action?"+$chok.view.fn.getUrlParams("${queryParams}");
 	});
 	// 定义权限树选择框
-    var s1 = $("#modal_sel1").ztreeSelectorModal({treeid:"tree_permit",
+    var s1 = $("#modal_sel1").ZtreeSelectModal({treeid:"tree_permit",
 												  title:"请选择权限节点",
 												  setting:permitSetting,
 												  callback:{

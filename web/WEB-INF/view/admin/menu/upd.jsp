@@ -131,7 +131,7 @@ $(function(){
 		}
 	});
 	// 初始化所有modal_sel
-	var modal_sel_app = $("#modal_sel_app").ztreeSelectorModal({
+	var modal_sel_app = $("#modal_sel_app").ZtreeSelectModal({
 		treeid : "tree_app",
 		title : "绑定应用",
 		setting : appSetting,
@@ -147,7 +147,7 @@ $(function(){
 			}
 		}
 	});
-	var modal_sel_menu = $("#modal_sel_menu").ztreeSelectorModal({
+	var modal_sel_menu = $("#modal_sel_menu").ZtreeSelectModal({
 		treeid : "tree_menu",
 		title : "绑定父菜单",
 		setting : menuSetting,
@@ -158,7 +158,7 @@ $(function(){
 			}
 		}
 	});
-	var modal_sel_permit = $("#modal_sel_permit").ztreeSelectorModal({
+	var modal_sel_permit = $("#modal_sel_permit").ZtreeSelectModal({
 		treeid : "tree_permit",
 		title : "绑定权限",
 		setting : permitSetting,
