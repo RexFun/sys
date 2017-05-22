@@ -52,7 +52,7 @@ CREATE TABLE `tb_menu` (
   `tc_level` varchar(1) CHARACTER SET utf8 DEFAULT '1' COMMENT '级别：0->根节点；1->一级节点；2->次级节点',
   PRIMARY KEY (`id`),
   KEY `fk_permit` (`tc_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `tb_permit` (
   `tc_url` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_order` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `tb_role_permit_mapping` (
   PRIMARY KEY (`id`),
   KEY `fk_permit` (`tc_permit_id`),
   KEY `fk_role` (`tc_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1502 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1724 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,4 +265,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-11 15:43:27
+-- Dump completed on 2017-05-17 18:10:04

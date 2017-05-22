@@ -40,7 +40,7 @@ CREATE TABLE `tb_app` (
 
 LOCK TABLES `tb_app` WRITE;
 /*!40000 ALTER TABLE `tb_app` DISABLE KEYS */;
-INSERT INTO `tb_app` VALUES (1,'sys','统一应用管理平台','http://localhost:8686/sys','1','1',83),(3,'origami','折纸','http://localhost:8787/origami','1','2',84),(5,'testapp','testapp','','1','3',88);
+INSERT INTO `tb_app` VALUES (1,'sys','统一应用管理平台','http://localhost:8686/sys','1','1',83),(3,'origami','折纸','http://localhost:8787/origami','1','2',84),(5,'testapp','testapp','','0','3',88);
 /*!40000 ALTER TABLE `tb_app` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,12 +58,11 @@ CREATE TABLE `tb_menu` (
   `tc_app_id` bigint(20) DEFAULT NULL,
   `tc_code` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_url` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_order` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
   `tc_level` varchar(1) CHARACTER SET utf8 DEFAULT '1' COMMENT '级别：0->根节点；1->一级节点；2->次级节点',
   PRIMARY KEY (`id`),
   KEY `fk_permit` (`tc_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +71,7 @@ CREATE TABLE `tb_menu` (
 
 LOCK TABLES `tb_menu` WRITE;
 /*!40000 ALTER TABLE `tb_menu` DISABLE KEYS */;
-INSERT INTO `tb_menu` VALUES (1,0,27,3,'Category management','分类管理','/admin/papercategory/get.action','2-1','1'),(2,0,2,3,'Model management','模型管理','/admin/papermodel/get.action','2-2','1'),(3,0,3,1,'System management','系统管理项','','1-1','1'),(4,3,4,1,'Menu management','菜单管理','/admin/menu/get.action','1-1-3','2'),(5,3,5,1,'Permit management','权限管理','/admin/permit/get.action','1-1-2','2'),(6,3,6,1,'Role management','角色管理','/admin/role/get.action','1-1-4','2'),(7,3,7,1,'User management','用户管理','/admin/user/get.action','1-1-5','2'),(8,0,61,1,'test','test','','1-2','1'),(9,8,62,1,'test-c','test-c','','1-2-1','2'),(10,9,67,1,'test-c-c1','test-c-c1','','1-2-1-1','2'),(12,3,75,1,'App management','应用管理','/admin/app/get.action','1-1-1','2'),(13,9,68,1,'test-c-c2','test-c-c2','','1-2-1-2','2');
+INSERT INTO `tb_menu` VALUES (1,0,27,3,'Category management','分类管理','2-1','1'),(2,0,2,3,'Model management','模型管理','2-2','1'),(3,0,3,1,'System management','系统管理','1-1','1'),(4,3,4,1,'Menu management','菜单管理','1-1-3','2'),(5,3,5,1,'Permit management','权限管理','1-1-2','2'),(6,3,6,1,'Role management','角色管理','1-1-4','2'),(7,3,7,1,'User management','用户管理','1-1-5','2'),(8,0,61,1,'test','test','1-2','1'),(9,8,62,1,'test-c','test-c','1-2-1','2'),(10,9,67,1,'test-c-c1','test-c-c1','1-2-1-1','2'),(12,3,75,1,'App management','应用管理','1-1-1','2'),(13,9,68,1,'test-c-c2','test-c-c2','1-2-1-2','2'),(14,0,18,3,'Image management','图片管理','2-3','1');
 /*!40000 ALTER TABLE `tb_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,9 +90,9 @@ CREATE TABLE `tb_permit` (
   `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_type` int(11) DEFAULT NULL COMMENT '1:菜单权限\n2:按钮权限',
   `tc_url` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_order` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tc_order` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +101,7 @@ CREATE TABLE `tb_permit` (
 
 LOCK TABLES `tb_permit` WRITE;
 /*!40000 ALTER TABLE `tb_permit` DISABLE KEYS */;
-INSERT INTO `tb_permit` VALUES (2,84,3,'Model management','模型管理',1,'/admin/papermodel/get.action','2-2'),(3,83,1,'System management','系统管理',1,'','1-1'),(4,3,1,'Menu management','菜单管理',1,'/admin/menu/get.action','1-1-3'),(5,3,1,'Permit management','权限管理',1,'/admin/permit/get.action','1-1-2'),(6,3,1,'Role management','角色管理',1,'/admin/role/get.action','1-1-4'),(7,3,1,'User management','用户管理',1,'/admin/user/get.action','1-1-5'),(13,2,3,'pbtn_add','添加',2,'/admin/model/add1.action','2-2-1'),(14,2,3,'pbtn_del','删除',2,'/admin/model/del.action','2-2-3'),(15,2,3,'pbtn_upd','修改',2,'/admin/model/upd1.action','2-2-4'),(16,2,3,'pbtn_query','查询',2,'/admin/model/getJson.action','2-2-5'),(17,2,3,'pbtn_getById','明细',2,'/admin/model/getById.action','2-2-6'),(18,2,3,'pbtn_getImages','图片',2,'/admin/image/get.action','2-2-7'),(27,84,3,'Category management','分类管理',1,'/admin/category/get.action','2-1'),(28,27,3,'pbtn_add','添加',2,'/admin/category/add1.action','2-1-1'),(29,27,3,'pbtn_del','删除',2,'/admin/category/del.action','2-1-3'),(30,27,3,'pbtn_upd','修改',2,'/admin/category/upd1.action','2-1-4'),(31,27,3,'pbtn_query','查询',2,'/admin/category/getJson.action','2-1-6'),(32,27,3,'pbtn_getById','明细',2,'/admin/category/getById.action','2-1-7'),(33,5,1,'pbtn_add','添加',2,'/admin/permit/add1.action','2-1-1-1-1'),(34,5,1,'pbtn_del','删除',2,'/admin/permit/del.action','2-1-1-1-3'),(35,5,1,'pbtn_upd','修改',2,'/admin/permit/upd1.action','2-1-1-1-4'),(36,5,1,'pbtn_query','查询',2,'/admin/permit/getJson.action','2-1-1-1-6'),(37,5,1,'pbtn_getById','明细',2,'/admin/permit/getById.action','2-1-1-1-7'),(38,4,1,'pbtn_add','添加',2,'/admin/menu/add1.action','3-1-1-1-1'),(39,4,1,'pbtn_del','删除',2,'/admin/menu/del.action','3-1-1-1-3'),(40,4,1,'pbtn_upd','修改',2,'/admin/menu/upd1.action','3-1-1-1-4'),(41,4,1,'pbtn_query','查询',2,'/admin/menu/getJson.action','3-1-1-1-6'),(42,4,1,'pbtn_getById','明细',2,'/admin/menu/getById.action','3-1-1-1-7'),(43,6,1,'pbtn_add','添加',2,'/admin/role/add1.action','4-1-1-1-1'),(44,6,1,'pbtn_del','删除',2,'/admin/role/del.action','4-1-1-1-3'),(45,6,1,'pbtn_upd','修改',2,'/admin/role/upd1.action','4-1-1-1-4'),(46,6,1,'pbtn_query','查询',2,'/admin/role/getJson.action','4-1-1-1-5'),(47,6,1,'pbtn_getById','明细',2,'/admin/role/getById.action','4-1-1-1-6'),(48,7,1,'pbtn_add','添加',2,'/admin/user/add1.action','5-1-1-1-1'),(49,7,1,'pbtn_del','删除',2,'/admin/user/del.action','5-1-1-1-3'),(50,7,1,'pbtn_upd','修改',2,'/admin/user/upd1.action','5-1-1-1-4'),(51,7,1,'pbtn_query','查询',2,'/admin/user/getJson.action','5-1-1-1-5'),(52,7,1,'pbtn_getById','明细',2,'/admin/user/getById.action','5-1-1-1-6'),(58,6,1,'act_getPermitTreeNodesByRoleId','角色已关联权限',3,'/admin/role/getPermitTreeNodesByRoleId.action','4-1-1-1-7'),(59,83,1,'dict_getRoleTreeNodes','字典-角色',3,'/dict/getRoleTreeNodes.action','9003'),(60,7,1,'act_getRoleTreeNodesByUserId','用户已关联角色',3,'/admin/user/getRoleTreeNodesByUserId.action','5-1-1-1-7'),(61,83,1,'test','test',1,'','2-1'),(62,61,1,'test-c','test-c',1,'','2-1-1'),(67,62,1,'test-c-c1','test-c-c1',1,'','2-1-1-1'),(68,62,1,'test-c-c2','test-c-c2',1,'','2-1-1-2'),(69,27,3,'pbtn_add2','添加2',2,'/admin/category/add2.action','2-1-2'),(70,27,3,'pbtn_upd2','修改2',2,'/admin/category/upd2.action','2-1-5'),(71,5,1,'pbtn_add2','添加2',2,'/admin/permit/add2.action','2-1-1-1-2'),(72,5,1,'pbtn_upd2','修改2',2,'/admin/permit/upd2.action','2-1-1-1-5'),(73,4,1,'pbtn_upd2','修改2',2,'/admin/menu/upd2.action','3-1-1-1-5'),(74,4,1,'pbtn_add2','添加2',2,'/admin/menu/add2.action','3-1-1-1-2'),(75,3,1,'app management','应用管理',1,'/admin/app/get.action','1-1-1'),(76,75,1,'pbtn_add','添加',2,'/admin/app/add1.action','1-1-1-1-1'),(77,75,1,'pbtn_add2','添加2',2,'/admin/app/add2.action','1-1-1-1-2'),(78,75,1,'pbtn_del','删除',2,'/admin/app/del.action','1-1-1-1-3'),(79,75,1,'pbtn_upd','修改',2,'/admin/app/upd1.action','1-1-1-1-4'),(80,75,1,'pbtn_upd2','修改2',2,'/admin/app/upd2.ac tion','1-1-1-1-5'),(81,75,1,'pbtn_query','查询',2,'/admin/app/getJson.action','1-1-1-1-6'),(82,75,1,'pbtn_getById','明细',2,'/admin/app/getById.action','1-1-1-1-7'),(83,0,1,'sys','统一应用管理平台',0,'http://localhost:8686/sys','1'),(84,0,3,'origami','折纸',0,'http://localhost:8787/origami','2'),(85,83,1,'dict_getAppTreeNodes','字典-应用',3,'/dict/getAppTreeNodes.action','9000'),(86,83,1,'dict_getMenuTreeNodes','字典-菜单',3,'/dict/getMenuTreeNodes.action','9002'),(87,83,1,'dict_getPermitTreeNodes','字典-权限',3,'/dict/getPermitTreeNodes.action','9001'),(88,0,NULL,'testapp','testapp',0,'','3');
+INSERT INTO `tb_permit` VALUES (2,84,3,'Model management','模型管理',1,'/admin/model/get.action','2-2'),(3,83,1,'System management','系统管理',1,'','1-1'),(4,3,1,'Menu management','菜单管理',1,'/admin/menu/get.action','1-1-3'),(5,3,1,'Permit management','权限管理',1,'/admin/permit/get.action','1-1-2'),(6,3,1,'Role management','角色管理',1,'/admin/role/get.action','1-1-4'),(7,3,1,'User management','用户管理',1,'/admin/user/get.action','1-1-5'),(13,2,3,'pbtn_add','添加',2,'/admin/model/add1.action','2-2-1'),(14,2,3,'pbtn_del','删除',2,'/admin/model/del.action','2-2-3'),(15,2,3,'pbtn_upd','修改',2,'/admin/model/upd1.action','2-2-4'),(16,2,3,'pbtn_query','查询',2,'/admin/model/getJson.action','2-2-6'),(17,2,3,'pbtn_getById','明细',2,'/admin/model/getById.action','2-2-7'),(18,84,3,'Image management','图片管理',1,'/admin/image/get.action','2-3'),(27,84,3,'Category management','分类管理',1,'/admin/category/get.action','2-1'),(28,27,3,'pbtn_add','添加',2,'/admin/category/add1.action','2-1-1'),(29,27,3,'pbtn_del','删除',2,'/admin/category/del.action','2-1-3'),(30,27,3,'pbtn_upd','修改',2,'/admin/category/upd1.action','2-1-4'),(31,27,3,'pbtn_query','查询',2,'/admin/category/getJson.action','2-1-6'),(32,27,3,'pbtn_getById','明细',2,'/admin/category/getById.action','2-1-7'),(33,5,1,'pbtn_add','添加',2,'/admin/permit/add1.action','2-1-1-1-1'),(34,5,1,'pbtn_del','删除',2,'/admin/permit/del.action','2-1-1-1-3'),(35,5,1,'pbtn_upd','修改',2,'/admin/permit/upd1.action','2-1-1-1-4'),(36,5,1,'pbtn_query','查询',2,'/admin/permit/getJson.action','2-1-1-1-6'),(37,5,1,'pbtn_getById','明细',2,'/admin/permit/getById.action','2-1-1-1-7'),(38,4,1,'pbtn_add','添加',2,'/admin/menu/add1.action','3-1-1-1-1'),(39,4,1,'pbtn_del','删除',2,'/admin/menu/del.action','3-1-1-1-3'),(40,4,1,'pbtn_upd','修改',2,'/admin/menu/upd1.action','3-1-1-1-4'),(41,4,1,'pbtn_query','查询',2,'/admin/menu/getJson.action','3-1-1-1-6'),(42,4,1,'pbtn_getById','明细',2,'/admin/menu/getById.action','3-1-1-1-7'),(43,6,1,'pbtn_add','添加',2,'/admin/role/add1.action','4-1-1-1-1'),(44,6,1,'pbtn_del','删除',2,'/admin/role/del.action','4-1-1-1-3'),(45,6,1,'pbtn_upd','修改',2,'/admin/role/upd1.action','4-1-1-1-4'),(46,6,1,'pbtn_query','查询',2,'/admin/role/getJson.action','4-1-1-1-6'),(47,6,1,'pbtn_getById','明细',2,'/admin/role/getById.action','4-1-1-1-7'),(48,7,1,'pbtn_add','添加',2,'/admin/user/add1.action','5-1-1-1-1'),(49,7,1,'pbtn_del','删除',2,'/admin/user/del.action','5-1-1-1-3'),(50,7,1,'pbtn_upd','修改',2,'/admin/user/upd1.action','5-1-1-1-4'),(51,7,1,'pbtn_query','查询',2,'/admin/user/getJson.action','5-1-1-1-6'),(52,7,1,'pbtn_getById','明细',2,'/admin/user/getById.action','5-1-1-1-7'),(58,6,1,'act_getPermitTreeNodesByRoleId','角色已关联权限',3,'/admin/role/getPermitTreeNodesByRoleId.action','4-1-1-1-7'),(59,83,1,'dict_getRoleTreeNodes','字典-角色',3,'/dict/getRoleTreeNodes.action','9003'),(60,7,1,'act_getRoleTreeNodesByUserId','用户已关联角色',3,'/admin/user/getRoleTreeNodesByUserId.action','5-1-1-1-7'),(61,83,1,'test','test',1,'','2-1'),(62,61,1,'test-c','test-c',1,'','2-1-1'),(67,62,1,'test-c-c1','test-c-c1',1,'','2-1-1-1'),(68,62,1,'test-c-c2','test-c-c2',1,'','2-1-1-2'),(69,27,3,'pbtn_add2','添加2',2,'/admin/category/add2.action','2-1-2'),(70,27,3,'pbtn_upd2','修改2',2,'/admin/category/upd2.action','2-1-5'),(71,5,1,'pbtn_add2','添加2',2,'/admin/permit/add2.action','2-1-1-1-2'),(72,5,1,'pbtn_upd2','修改2',2,'/admin/permit/upd2.action','2-1-1-1-5'),(73,4,1,'pbtn_upd2','修改2',2,'/admin/menu/upd2.action','3-1-1-1-5'),(74,4,1,'pbtn_add2','添加2',2,'/admin/menu/add2.action','3-1-1-1-2'),(75,3,1,'app management','应用管理',1,'/admin/app/get.action','1-1-1'),(76,75,1,'pbtn_add','添加',2,'/admin/app/add1.action','1-1-1-1-1'),(77,75,1,'pbtn_add2','添加2',2,'/admin/app/add2.action','1-1-1-1-2'),(78,75,1,'pbtn_del','删除',2,'/admin/app/del.action','1-1-1-1-3'),(79,75,1,'pbtn_upd','修改',2,'/admin/app/upd1.action','1-1-1-1-4'),(80,75,1,'pbtn_upd2','修改2',2,'/admin/app/upd2.action','1-1-1-1-5'),(81,75,1,'pbtn_query','查询',2,'/admin/app/getJson.action','1-1-1-1-6'),(82,75,1,'pbtn_getById','明细',2,'/admin/app/getById.action','1-1-1-1-7'),(83,0,1,'sys','统一应用管理平台',0,'http://localhost:8686/sys','1'),(84,0,3,'origami','折纸',0,'http://localhost:8787/origami','2'),(85,83,1,'dict_getAppTreeNodes','字典-应用',3,'/dict/getAppTreeNodes.action','9000'),(86,83,1,'dict_getMenuTreeNodes','字典-菜单',3,'/dict/getMenuTreeNodes.action','9002'),(87,83,1,'dict_getPermitTreeNodes','字典-权限',3,'/dict/getPermitTreeNodes.action','9001'),(88,0,NULL,'testapp','testapp',0,'','3'),(89,6,1,'pbtn_add2','添加2',2,'/admin/role/add2.action','4-1-1-1-2'),(90,6,1,'pbtn_upd2','修改2',2,'/admin/role/upd2.action','4-1-1-1-5'),(91,2,3,'pbtn_upd2','修改2',2,'/admin/model/upd2.action','2-2-5'),(92,7,1,'pbtn_add2','添加2',2,'/admin/user/add2.action','5-1-1-1-2'),(93,7,1,'pbtn_upd2','修改2',2,'/admin/user/upd2.action','5-1-1-1-5'),(94,18,3,'pbtn_add','添加',2,'/admin/image/add1.action','2-3-1'),(95,18,3,'pbtn_del','删除',2,'/admin/image/del.action','2-3-2'),(96,18,3,'pbtn_query','查询',2,'/admin/image/getJson.action','2-3-3'),(97,18,3,'pbtn_getById','明细',2,'/admin/image/getById.action','2-3-4'),(98,2,3,'pbtn_add2','添加2',2,'/admin/model/add2.action','2-2-2');
 /*!40000 ALTER TABLE `tb_permit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +117,7 @@ CREATE TABLE `tb_role` (
   `tc_code` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +126,7 @@ CREATE TABLE `tb_role` (
 
 LOCK TABLES `tb_role` WRITE;
 /*!40000 ALTER TABLE `tb_role` DISABLE KEYS */;
-INSERT INTO `tb_role` VALUES (28,'sysadmin','系统管理员'),(29,'r2','r2'),(31,'r4','r4'),(32,'r5','r5'),(33,'r3','r3'),(34,'普通用户','普通用户'),(35,'superadmin','超级管理员'),(36,'ttt','ttt');
+INSERT INTO `tb_role` VALUES (28,'sys_admin','系统管理员'),(34,'user','普通用户'),(35,'super_admin','超级管理员');
 /*!40000 ALTER TABLE `tb_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +144,7 @@ CREATE TABLE `tb_role_permit_mapping` (
   PRIMARY KEY (`id`),
   KEY `fk_permit` (`tc_permit_id`),
   KEY `fk_role` (`tc_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1153 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1724 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +153,7 @@ CREATE TABLE `tb_role_permit_mapping` (
 
 LOCK TABLES `tb_role_permit_mapping` WRITE;
 /*!40000 ALTER TABLE `tb_role_permit_mapping` DISABLE KEYS */;
-INSERT INTO `tb_role_permit_mapping` VALUES (50,31,3),(51,31,4),(53,32,3),(54,32,4),(55,32,2),(61,33,2),(324,29,3),(325,29,4),(847,34,27),(848,34,28),(849,34,69),(850,34,29),(851,34,30),(852,34,70),(853,34,31),(854,34,32),(855,34,3),(856,34,5),(857,34,35),(858,34,36),(911,28,2),(912,28,16),(913,28,17),(914,28,18),(915,28,3),(916,28,5),(917,28,35),(918,28,72),(919,28,36),(920,28,37),(922,28,4),(923,28,38),(924,28,74),(925,28,39),(926,28,40),(927,28,73),(928,28,41),(929,28,42),(933,28,7),(934,28,51),(935,28,52),(936,28,59),(937,28,60),(1095,35,61),(1096,35,62),(1097,35,67),(1098,35,68),(1099,35,27),(1100,35,28),(1101,35,29),(1102,35,30),(1103,35,31),(1104,35,32),(1105,35,2),(1106,35,13),(1107,35,14),(1108,35,15),(1109,35,16),(1110,35,17),(1111,35,18),(1112,35,3),(1113,35,75),(1114,35,76),(1115,35,77),(1116,35,78),(1117,35,79),(1118,35,80),(1119,35,81),(1120,35,82),(1121,35,5),(1122,35,33),(1123,35,34),(1124,35,35),(1125,35,36),(1126,35,37),(1128,35,4),(1129,35,38),(1130,35,39),(1131,35,40),(1132,35,41),(1133,35,42),(1137,35,6),(1138,35,43),(1139,35,44),(1140,35,45),(1141,35,46),(1142,35,47),(1144,35,58),(1145,35,7),(1146,35,48),(1147,35,49),(1148,35,50),(1149,35,51),(1150,35,52),(1151,35,59),(1152,35,60);
+INSERT INTO `tb_role_permit_mapping` VALUES (1426,28,83),(1427,28,3),(1428,28,5),(1429,28,35),(1430,28,72),(1431,28,36),(1432,28,37),(1433,28,4),(1434,28,38),(1435,28,39),(1436,28,40),(1437,28,41),(1438,28,42),(1439,28,7),(1440,28,51),(1441,28,52),(1442,28,60),(1443,28,59),(1444,28,84),(1445,28,27),(1446,28,28),(1447,28,69),(1448,28,29),(1449,28,30),(1450,28,70),(1451,28,31),(1452,28,32),(1453,28,2),(1454,28,16),(1455,28,17),(1456,28,18),(1476,34,83),(1477,34,3),(1478,34,75),(1479,34,81),(1480,34,82),(1481,34,5),(1482,34,36),(1483,34,37),(1484,34,4),(1485,34,41),(1486,34,42),(1487,34,6),(1488,34,46),(1489,34,47),(1490,34,58),(1491,34,7),(1492,34,51),(1493,34,52),(1494,34,60),(1495,34,84),(1496,34,27),(1497,34,31),(1498,34,32),(1499,34,2),(1500,34,16),(1501,34,17),(1649,35,83),(1650,35,3),(1651,35,75),(1652,35,76),(1653,35,77),(1654,35,78),(1655,35,79),(1656,35,80),(1657,35,81),(1658,35,82),(1659,35,5),(1660,35,33),(1661,35,71),(1662,35,34),(1663,35,35),(1664,35,72),(1665,35,36),(1666,35,37),(1667,35,4),(1668,35,38),(1669,35,74),(1670,35,39),(1671,35,40),(1672,35,73),(1673,35,41),(1674,35,42),(1675,35,6),(1676,35,43),(1677,35,89),(1678,35,44),(1679,35,45),(1680,35,90),(1681,35,46),(1682,35,47),(1683,35,58),(1684,35,7),(1685,35,48),(1686,35,92),(1687,35,49),(1688,35,50),(1689,35,93),(1690,35,51),(1691,35,52),(1692,35,60),(1693,35,61),(1694,35,62),(1695,35,67),(1696,35,68),(1697,35,85),(1698,35,87),(1699,35,86),(1700,35,59),(1701,35,84),(1702,35,27),(1703,35,28),(1704,35,69),(1705,35,29),(1706,35,30),(1707,35,70),(1708,35,31),(1709,35,32),(1710,35,2),(1711,35,13),(1712,35,98),(1713,35,14),(1714,35,15),(1715,35,91),(1716,35,16),(1717,35,17),(1718,35,18),(1719,35,94),(1720,35,95),(1721,35,96),(1722,35,97),(1723,35,88);
 /*!40000 ALTER TABLE `tb_role_permit_mapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +172,7 @@ CREATE TABLE `tb_user` (
   `tc_password` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tc_add_time` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,4 +335,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-24 15:26:41
+-- Dump completed on 2017-05-17 18:09:38
