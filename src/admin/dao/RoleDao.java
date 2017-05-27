@@ -1,25 +1,23 @@
 package admin.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import admin.entity.Role;
 import chok.devwork.BaseDao;
 
-
 @Repository
 public class RoleDao extends BaseDao<Role,Long>
 {
 	@Override
-	public Class getEntityClass()
+	public Class<Role> getEntityClass()
 	{
 		return Role.class;
 	}
 	
-	public List getByUserId(Long userId)
+	public List<Role> queryByUserId(Long userId)
 	{
-		return this.getSqlSession().selectList(getStatementName("getByUserId"), userId);
+		return this.getSqlSession().selectList(getStatementName("queryByUserId"), userId);
 	}
 }

@@ -3,120 +3,112 @@
 <!-- 主内容面板 -->
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>${param.menuName}</h1>
+		<h1>${param.menuName}<small>明细</small></h1>
 		<ol class="breadcrumb">
 			<li><a href="${ctx}/index.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
-			<li class="active">${param.menuName}</li>
+			<li><a href="query.action?menuId=${param.menuId}&menuName=${param.menuName}">${param.menuName}</a></li>
+			<li class="active">明细</li>
 		</ol>
 	</section>
 	<section class="content">
-		<div class="row">
-		<div class="col-md-12">
 		<div class="box box-default">
-		<div class="box-header with-border">
-			<h3 class="box-title"><small><i class="glyphicon glyphicon-th-list"></i></small></h3>
-		</div>
-		<div class="box-body">
-			<!-- toolbar
-			======================================================================================================= -->
-			<div id="toolbar">
-			<button type="button" class="btn btn-default" id="bar_btn_add" pbtnId="pbtn_add"><i class="glyphicon glyphicon-plus"></i></button>
-			<button type="button" class="btn btn-default" id="bar_btn_del" pbtnId="pbtn_del"><i class="glyphicon glyphicon-remove"></i></button>
-			<button type="button" class="btn btn-default" id="bar_btn_query" pbtnId="pbtn_query" data-toggle="modal" data-target="#modal_form_query"><i class="glyphicon glyphicon-search"></i></button>
+			<div class="box-header with-border">
+				<h3 class="box-title"><small><i class="glyphicon glyphicon-info-sign"></i></small></h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" id="back"><i class="glyphicon glyphicon-arrow-left"></i></button>
+				</div>
 			</div>
-			<!-- data list
-			======================================================================================================= -->
-			<table id="tb_list"></table>
-			<!-- context menu
-			======================================================================================================= -->
-			<ul id="tb_ctx_menu" class="dropdown-menu">
-			    <li data-item="upd" class="upd" pbtnId="pbtn_upd"><a><i class="glyphicon glyphicon-edit"></i></a></li>
-			    <li data-item="getById" class="getById" pbtnId="pbtn_getById"><a><i class="glyphicon glyphicon-info-sign"></i></a></li>
-			</ul>
-		</div>
-		</div>
-		</div>
-		</div>
-		<!-- query form modal ======================================================================================================= -->
-		<form id="form_query">
-		<div id="modal_form_query" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-					   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					   <h4 class="modal-title" id="modal_label">筛选条件</h4>
-					</div>
-					<div class="modal-body">
-						<!-- queryForm -->
-						<div class="form-group">
-							 <label for="f_tc_name">名称：</label><input type="text" class="form-control input-sm" id="f_tc_name"/>
+			<div class="box-body">
+				<form class="dataForm" id="dataForm" role="form">
+					<div class="row">
+						<div class="col-md-6 column">
+							<fieldset>
+							<legend>基础信息</legend>
+								<div class="form-group"><label class="control-label" for="id">ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
+								<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
+								<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
+							</fieldset>
+						</div>
+						<div class="col-md-6 column">
+							<fieldset>
+							<legend>权限</legend>
+								<input type="checkbox" id="expandAll"/><label for="expandAll">&nbsp;展开</label>
+								<ul id="permitTree" class="ztree" style="overflow:auto"></ul>
+							</fieldset>
 						</div>
 					</div>
-					<div class="modal-footer">
-					   <button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-repeat"></i></button>
-					   <button type="button" class="btn btn-primary" id="form_query_btn"><i class="glyphicon glyphicon-ok"></i></button>
-					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal -->
+				</form>
+			</div>
+			<div class="box-footer">
+			&nbsp;
+			</div>
 		</div>
-		</form>
 	</section>
 </div>
 <%@ include file="/common/inc_footer.jsp"%>
 <!-- ======================================================================================================= -->
-<script type="text/javascript" src="/static/res/chok/js/chok.auth.js"></script>
 <script type="text/javascript" src="/static/res/chok/js/chok.view.get.js"></script>
 <script type="text/javascript">
 /**********************************************************/
 /* 全局函数 */
 /**********************************************************/
-$(function() {
+$(function(){
 	$chok.view.fn.selectSidebarMenu("${param.menuId}","${param.menuPermitId}","${param.menuName}");
-	$chok.view.get.init.toolbar();
-	$chok.view.get.init.modalFormQuery();
-	$chok.view.get.init.table("${queryParams.f_page}","${queryParams.f_pageSize}");
-	$chok.auth.btn($chok.view.menuPermitId,$g_btnJson);
+	// 返回列表页
+	$("#back").click(function(){
+		location.href = "query.action?"+$chok.view.fn.getUrlParams("${queryParams}");
+	});
+	// 初始化权限树
+    zTreeObj = $.fn.zTree.init($("#permitTree"), setting);
+    // 全部展开/折叠
+    $("#expandAll").click(function(){
+    	var zTree = $.fn.zTree.getZTreeObj("permitTree");
+        if($(this).prop("checked")==true){
+        	zTree.expandAll(true);
+        }else{
+        	zTree.expandAll(false);
+        }
+    });
 });
 /**********************************************************/
-/* 初始化配置 */
+/* zTree配置 */
 /**********************************************************/
-$chok.view.get.config.setPreFormParams = function(){
-	$("#f_tc_name").val(typeof("${queryParams.f_tc_name}")=="undefined"?"":"${queryParams.f_tc_name}");
-};
-$chok.view.get.config.formParams = function(p){
-	p.tc_name = $("#f_tc_name").val();
-    return p;
-};
-$chok.view.get.config.urlParams = function(){
-   	return {f_tc_name : $("#f_tc_name").val()};
-};
-$chok.view.get.config.tableColumns = 
-[
-    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
-    {title:'代号', field:'m.tc_code', align:'center', valign:'middle', sortable:false, 
-    	editable:
-    	{
-	    	type:'text',
-	    	title:'代号',
-	    	validate: function(value){
-	            return $chok.validator.checkEditable("required", null, value, null);
+// zTree 的参数配置
+var zTreeObj;
+var setting = 
+{
+	check: 
+	{
+		enable: true
+	},
+	async: 
+	{
+		enable: true,
+		url:"getPermitTreeNodesByRoleId.action?tc_role_id=${po.m.id}"
+	},
+	data: 
+	{
+		key: 
+		{
+			name:"tc_name2"
+		},
+		simpleData: 
+		{
+			idKey:"id",
+			pIdKey:"pid",
+			enable: true
+		}
+	},
+	callback: {
+		onCheck: function (event, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("permitTree")
+		    var nodes = zTree.getCheckedNodes(true);
+	    	var ids = [];
+	    	for(var i=0; i<nodes.length; i++) {
+	    		ids.push(nodes[i].id);
 	    	}
-    	}
-    },
-    {title:'名称', field:'m.tc_name', align:'center', valign:'middle', sortable:false, 
-    	editable:
-    	{
-	    	type:'text',
-	    	title:'名称',
-	    	validate: function(value){
-	            return $chok.validator.checkEditable("required", null, value, null);
-	    	}
-    	}
-    }
-];
-$chok.view.get.callback.delRows = function(){
-};
-$chok.view.get.callback.onLoadSuccess = function(){
-	$chok.auth.btn($chok.view.menuPermitId,$g_btnJson);
+	    	$("#tc_permit_ids").val(ids);
+		}
+	}
 };
 </script>

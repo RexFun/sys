@@ -38,11 +38,11 @@
 		</where>
 	</sql>	
 	
-	<select id="getById" resultMap="result">
+	<select id="get" resultMap="result">
 		select <include refid="columns"/> from tb_role t where t.id = #{id}
 	</select>
 	
-	<select id="get" resultType="list" resultMap="result">
+	<select id="query" resultType="list" resultMap="result">
 		select <include refid="columns"/> from tb_role t
 		<include refid="dynamicWhere" /> order by 1
 		<include refid="page" />
@@ -53,7 +53,7 @@
 		<include refid="dynamicWhere" />
 	</select>
 	
-	<select id="getByUserId" resultType="list" resultMap="result">
+	<select id="queryByUserId" resultType="list" resultMap="result">
 		select <include refid="columns"/> 
 		  from tb_role t
          inner join tb_user_role_mapping t1

@@ -8,18 +8,17 @@ import org.springframework.stereotype.Repository;
 import admin.entity.App;
 import chok.devwork.BaseDao;
 
-
 @Repository
 public class AppDao extends BaseDao<App,Long>
 {
 	@Override
-	public Class getEntityClass()
+	public Class<App> getEntityClass()
 	{
 		return App.class;
 	}
 	
-	public List getByUserId(Map m)
+	public List<App> queryByUserId(Map<String, Object> m)
 	{
-		return this.getSqlSession().selectList(getStatementName("getByUserId"), m);
+		return this.getSqlSession().selectList(getStatementName("queryByUserId"), m);
 	}
 }

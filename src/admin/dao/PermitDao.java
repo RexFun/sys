@@ -8,24 +8,23 @@ import org.springframework.stereotype.Repository;
 import admin.entity.Permit;
 import chok.devwork.BaseDao;
 
-
 @Repository
 public class PermitDao extends BaseDao<Permit,Long>
 {
 	@Override
-	public Class getEntityClass()
+	public Class<Permit> getEntityClass()
 	{
 		return Permit.class;
 	}
 	
-	public List getByRoleId(Long roleId)
+	public List<Permit> queryByRoleId(Long roleId)
 	{
-		return this.getSqlSession().selectList(getStatementName("getByRoleId"), roleId);
+		return this.getSqlSession().selectList(getStatementName("queryByRoleId"), roleId);
 	}
 	
-	public List getBtnPermitByUserId(Long userId)
+	public List<Permit> queryBtnPermitByUserId(Long userId)
 	{
-		return this.getSqlSession().selectList(getStatementName("getBtnPermitByUserId"), userId);
+		return this.getSqlSession().selectList(getStatementName("queryBtnPermitByUserId"), userId);
 	}
 	
 	public int getCountByUserIdAndActionUrl(Map m){

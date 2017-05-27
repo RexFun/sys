@@ -5,12 +5,11 @@ import org.springframework.stereotype.Repository;
 import admin.entity.UserRoleMapping;
 import chok.devwork.BaseDao;
 
-
 @Repository
 public class UserRoleMappingDao extends BaseDao<UserRoleMapping,Long>
 {
 	@Override
-	public Class getEntityClass()
+	public Class<UserRoleMapping> getEntityClass()
 	{
 		return UserRoleMapping.class;
 	}

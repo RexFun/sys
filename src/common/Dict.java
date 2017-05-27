@@ -65,8 +65,8 @@ public class Dict
 		List<Object> treeNodes = new ArrayList<Object>();
 		if(selectedId!=0)
 		{// 所有，且标记已选
-			BaseModel selectedObj = (BaseModel) service.getById(selectedId);
-			List<BaseModel> objData = service.get(params);
+			BaseModel selectedObj = (BaseModel) service.get(selectedId);
+			List<BaseModel> objData = service.query(params);
 			for(int i=0; i<objData.size(); i++)
 			{
 				BaseModel o = objData.get(i);
@@ -79,7 +79,7 @@ public class Dict
 		}
 		else
 		{// 所有
-			List<BaseModel> resultData = service.get(params);
+			List<BaseModel> resultData = service.query(params);
 			for(BaseModel o : resultData)
 			{
 				treeNodes.add(o.getM());

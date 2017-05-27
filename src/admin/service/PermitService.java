@@ -36,14 +36,14 @@ public class PermitService extends BaseService<Permit,Long>
 		}
 	}
 	
-	public List getByRoleId(Long roleId)
+	public List<Permit> queryByRoleId(Long roleId)
 	{
-		return permitDao.getByRoleId(roleId);
+		return permitDao.queryByRoleId(roleId);
 	}
 	
-	public List getBtnPermitByUserId(Long userId)
+	public List<Object> queryBtnPermitByUserId(Long userId)
 	{
-		List<Permit> btnPermitData = permitDao.getBtnPermitByUserId(userId);
+		List<Permit> btnPermitData = permitDao.queryBtnPermitByUserId(userId);
 		List<Object> treeNodes = new ArrayList<Object>();
 		for(int i=0; i<btnPermitData.size(); i++)
 		{

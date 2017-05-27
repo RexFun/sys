@@ -110,7 +110,7 @@
 		</init-param>
 		<init-param>
 			<param-name>ignoreURL</param-name>     
-			<param-value>/admin/home/get.action,/admin/home/searchMenu.action,/noaccess.jsp</param-value>     
+			<param-value>/admin/home/query.action,/admin/home/searchMenu.action,/noaccess.jsp</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>appId</param-name>

@@ -81,15 +81,15 @@ public class RoleService extends BaseService<Role,Long>
 	}
 	
 	@Override
-	public Role getById(Long id) 
+	public Role get(Long id) 
 	{
-		Role po = roleDao.getById(id);
+		Role po = roleDao.get(id);
 		po.set("tc_permit_ids", rolePermitMappingDao.getPermitIdsByRoleId(id));
 		return po;
 	}
 	
-	public List getByUserId(Long userId)
+	public List<Role> queryByUserId(Long userId)
 	{
-		return roleDao.getByUserId(userId);
+		return roleDao.queryByUserId(userId);
 	}
 }

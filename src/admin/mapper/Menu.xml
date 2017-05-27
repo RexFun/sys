@@ -72,7 +72,7 @@
 		</where>
 	</sql>	
 	
-	<select id="getById" resultMap="result">
+	<select id="get" resultMap="result">
 		select <include refid="columns"/>, tt.tc_name tc_p_name, t1.tc_name tc_permit_name, t2.tc_name tc_app_name
 		  from tb_menu t
 		  left join tb_menu tt on t.pid = tt.id
@@ -81,7 +81,7 @@
 		 where t.id = #{id}
 	</select>
 	
-	<select id="get" resultType="list" resultMap="result">
+	<select id="query" resultType="list" resultMap="result">
 		select <include refid="columns"/>, tt.tc_name tc_p_name, t1.tc_name tc_permit_name, t2.tc_name tc_app_name
 		  from tb_menu t
 		  left join tb_menu tt on t.pid = tt.id

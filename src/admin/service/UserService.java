@@ -76,15 +76,10 @@ public class UserService extends BaseService<User,Long>
 		}
 	}
 	
-	public void updPwd(User po)
-	{
-		userDao.updPwd(po);
-	}
-	
 	@Override
-	public User getById(Long id) 
+	public User get(Long id) 
 	{
-		User po = userDao.getById(id);
+		User po = userDao.get(id);
 		po.set("tc_role_ids", userRoleMappingDao.getRoleIdsByUserId(id));
 		return po;
 	}

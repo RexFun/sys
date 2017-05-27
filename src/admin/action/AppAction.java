@@ -23,8 +23,8 @@ public class AppAction extends BaseController<App>
 	@Autowired
 	private AppService service;
 	
-	@RequestMapping("/add1")
-	public String add1() 
+	@RequestMapping("/add")
+	public String add() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
 		return "/admin/app/add.jsp";
@@ -61,10 +61,10 @@ public class AppAction extends BaseController<App>
 		printJson(result);
 	}
 	
-	@RequestMapping("/upd1")
-	public String upd1() 
+	@RequestMapping("/upd")
+	public String upd() 
 	{
-		put("po", service.getById(req.getLong("id")));
+		put("po", service.get(req.getLong("id")));
 		put("queryParams",req.getParameterValueMap(false, true));
 		return "/admin/app/upd.jsp";
 	}
@@ -83,27 +83,27 @@ public class AppAction extends BaseController<App>
 		}
 	}
 
-	@RequestMapping("/getById")
-	public String getById() 
-	{
-		put("po",service.getById(req.getLong("id")));
-		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/app/getById.jsp";
-	}
-
 	@RequestMapping("/get")
 	public String get() 
 	{
+		put("po",service.get(req.getLong("id")));
 		put("queryParams",req.getParameterValueMap(false, true));
 		return "/admin/app/get.jsp";
 	}
+
+	@RequestMapping("/query")
+	public String query() 
+	{
+		put("queryParams",req.getParameterValueMap(false, true));
+		return "/admin/app/query.jsp";
+	}
 	
-	@RequestMapping("/getJson")
-	public void getJson()
+	@RequestMapping("/query2")
+	public void query2()
 	{
 		Map<String, Object> m = req.getParameterValueMap(false, true);
 		result.put("total",service.getCount(m));
-		result.put("rows",service.get(m));
+		result.put("rows",service.query(m));
 		printJson(result.getData());
 	}
 	

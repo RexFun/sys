@@ -24,8 +24,8 @@ public class PermitAction extends BaseController<Permit>
 	@Autowired
 	private AppService appService;
 	
-	@RequestMapping("/add1")
-	public String add1() 
+	@RequestMapping("/add")
+	public String add() 
 	{
 		put("queryParams", req.getParameterValueMap(false, true));
 		return "/admin/permit/add.jsp";
@@ -62,10 +62,10 @@ public class PermitAction extends BaseController<Permit>
 		printJson(result);
 	}
 	
-	@RequestMapping("/upd1")
-	public String upd1() 
+	@RequestMapping("/upd")
+	public String upd() 
 	{
-		put("po", service.getById(req.getLong("id")));
+		put("po", service.get(req.getLong("id")));
 		put("queryParams", req.getParameterValueMap(false, true));
 		return "/admin/permit/upd.jsp";
 	}
@@ -84,28 +84,28 @@ public class PermitAction extends BaseController<Permit>
 		}
 	}
 
-	@RequestMapping("/getById")
-	public String getById() 
-	{
-		put("po", service.getById(req.getLong("id")));
-		put("queryParams", req.getParameterValueMap(false, true));
-		return "/admin/permit/getById.jsp";
-	}
-
 	@RequestMapping("/get")
 	public String get() 
 	{
-		put("queryParams",req.getParameterValueMap(false, true));
-		put("appList", appService.get(null));
+		put("po", service.get(req.getLong("id")));
+		put("queryParams", req.getParameterValueMap(false, true));
 		return "/admin/permit/get.jsp";
 	}
+
+	@RequestMapping("/query")
+	public String query() 
+	{
+		put("queryParams",req.getParameterValueMap(false, true));
+		put("appList", appService.query(null));
+		return "/admin/permit/query.jsp";
+	}
 	
-	@RequestMapping("/getJson")
-	public void getJson()
+	@RequestMapping("/query2")
+	public void query2()
 	{
 		Map m = req.getParameterValueMap(false, true);
 		result.put("total",service.getCount(m));
-		result.put("rows",service.get(m));
+		result.put("rows",service.query(m));
 		printJson(result.getData());
 	}
 }

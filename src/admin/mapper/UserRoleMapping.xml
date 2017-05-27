@@ -58,11 +58,11 @@
 		where t.tc_user_id = #{tc_user_id}
 	</select>
 	
-	<select id="getById" resultMap="result">
+	<select id="get" resultMap="result">
 		select <include refid="columns"/> from tb_user_role_mapping where id = #{id}
 	</select>
 	
-	<select id="get" resultType="list" resultMap="result">
+	<select id="query" resultType="list" resultMap="result">
 		select <include refid="columns"/> from tb_user_role_mapping
 		<include refid="dynamicWhere" /> order by 1
 		<include refid="page" />

@@ -23,8 +23,8 @@ public class MenuAction extends BaseController<Menu>
 	@Autowired
 	private AppService appService;
 	
-	@RequestMapping("/add1")
-	public String add1() 
+	@RequestMapping("/add")
+	public String add() 
 	{
 		put("queryParams", req.getParameterValueMap(false, true));
 		return "/admin/menu/add.jsp";
@@ -61,10 +61,10 @@ public class MenuAction extends BaseController<Menu>
 		printJson(result);
 	}
 	
-	@RequestMapping("/upd1")
-	public String upd1() 
+	@RequestMapping("/upd")
+	public String upd() 
 	{
-		put("po", service.getById(req.getLong("id")));
+		put("po", service.get(req.getLong("id")));
 		put("queryParams", req.getParameterValueMap(false, true));
 		return "/admin/menu/upd.jsp";
 	}
@@ -83,28 +83,28 @@ public class MenuAction extends BaseController<Menu>
 		}
 	}
 
-	@RequestMapping("/getById")
-	public String getById() 
-	{
-		put("po", service.getById(req.getLong("id")));
-		put("queryParams", req.getParameterValueMap(false, true));
-		return "/admin/menu/getById.jsp";
-	}
-
 	@RequestMapping("/get")
 	public String get() 
 	{
-		put("queryParams",req.getParameterValueMap(false, true));
-		put("appList", appService.get(null));
+		put("po", service.get(req.getLong("id")));
+		put("queryParams", req.getParameterValueMap(false, true));
 		return "/admin/menu/get.jsp";
 	}
+
+	@RequestMapping("/query")
+	public String query() 
+	{
+		put("queryParams",req.getParameterValueMap(false, true));
+		put("appList", appService.query(null));
+		return "/admin/menu/query.jsp";
+	}
 	
-	@RequestMapping("/getJson")
-	public void getJson()
+	@RequestMapping("/query2")
+	public void query2()
 	{
 		Map<String, Object> m = req.getParameterValueMap(false, true);
 		result.put("total", service.getCount(m));
-		result.put("rows", service.get(m));
+		result.put("rows", service.query(m));
 		printJson(result.getData());
 	}
 }

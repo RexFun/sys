@@ -18,11 +18,6 @@
 		  	   tc_email = #{m.tc_email}
 		 where id = #{m.id}
 	</update>
-	<update id="updPwd" parameterType="admin.entity.User">
-		update tb_user set
-		  	   tc_password = #{m.tc_password}
-		 where id = #{m.id}
-	</update>
   	
 	<resultMap type="admin.entity.User" id="result">
 		<id property="m.id" column="id"/>
@@ -50,11 +45,11 @@
 		</where>
 	</sql>	
 	
-	<select id="getById" resultMap="result">
+	<select id="get" resultMap="result">
 		select <include refid="columns"/> from tb_user t where t.id = #{id}
 	</select>
 	
-	<select id="get" resultType="list" resultMap="result">
+	<select id="query" resultType="list" resultMap="result">
 		select <include refid="columns"/> from tb_user t
 		<include refid="dynamicWhere" /> order by 1
 		<include refid="page" />

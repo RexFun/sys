@@ -27,8 +27,8 @@ public class UserAction extends BaseController<User>
 	@Autowired
 	private RoleService roleService;
 	
-	@RequestMapping("/add1")
-	public String add1() 
+	@RequestMapping("/add")
+	public String add() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
 		return "/admin/user/add.jsp";
@@ -65,10 +65,10 @@ public class UserAction extends BaseController<User>
 		printJson(result);
 	}
 	
-	@RequestMapping("/upd1")
-	public String upd1() 
+	@RequestMapping("/upd")
+	public String upd() 
 	{
-		put("po",service.getById(req.getLong("id")));
+		put("po",service.get(req.getLong("id")));
 		put("queryParams",req.getParameterValueMap(false, true));
 		return "/admin/user/upd.jsp";
 	}
@@ -86,78 +86,44 @@ public class UserAction extends BaseController<User>
 			print("0:" + e.getMessage());
 		}
 	}
-	
-	@RequestMapping("/updPwd1")
-	public String updPwd1() 
-	{
-		put("po",service.getById(req.getLong("id")));
-		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/user/updPwd.jsp";
-	}
-	@RequestMapping("/updPwd2")
-	public void updPwd2() 
-	{
-		try 
-		{
-			User po = service.getById(req.getLong("id"));
-			if(!EncryptionUtil.getMD5(req.getString("old_password")).equals(po.getString("tc_password")))
-			{
-				result.setSuccess(false);
-				result.setMsg("原密码不正确");
-			}
-			else
-			{
-				po.set("tc_password", EncryptionUtil.getMD5(req.getString("new_password")));
-				service.updPwd(po);
-				result.setSuccess(true);
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			result.setSuccess(false);
-			result.setMsg(e.getMessage());
-		}
-		printJson(result);
-	}
 
-	@RequestMapping("/getById")
-	public String getById() 
+	@RequestMapping("/get")
+	public String get() 
 	{
-		put("po",service.getById(req.getLong("id")));
+		put("po",service.get(req.getLong("id")));
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/user/getById.jsp";
+		return "/admin/user/get.jsp";
 	}
 	
 	@RequestMapping("/getMyInfo")
 	public String getMyInfo() 
 	{
-		put("po",service.getById(req.getLong("id")));
+		put("po",service.get(req.getLong("id")));
 		put("queryParams",req.getParameterValueMap(false, true));
 		return "/admin/user/getMyInfo.jsp";
 	}
 
-	@RequestMapping("/get")
-	public String get() 
+	@RequestMapping("/query")
+	public String query() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/user/get.jsp";
+		return "/admin/user/query.jsp";
 	}
 	
-	@RequestMapping("/getJson")
-	public void getJson()
+	@RequestMapping("/query2")
+	public void query2()
 	{
 		Map m = req.getParameterValueMap(false, true);
 		result.put("total",service.getCount(m));
-		result.put("rows",service.get(m));
+		result.put("rows",service.query(m));
 		printJson(result.getData());
 	}
 	
 	@RequestMapping("/getRoleTreeNodesByUserId")
 	public void getRoleTreeNodesByUserId()
 	{
-		List<Role> userRoleData = roleService.getByUserId(req.getLong("tc_user_id"));
-		List<Role> roleData = roleService.get(null);
+		List<Role> userRoleData = roleService.queryByUserId(req.getLong("tc_user_id"));
+		List<Role> roleData = roleService.query(null);
 		List<Object> treeNodes = new ArrayList<Object>();
 		
 		for(int i=0; i<roleData.size(); i++)

@@ -77,7 +77,7 @@
 		</where>
 	</sql>
 	
-	<select id="getById" resultMap="result">
+	<select id="get" resultMap="result">
 		select <include refid="columns"/>, tt.tc_name tc_p_name, t2.tc_name tc_app_name
 		  from tb_permit t
 		  left join tb_permit tt on t.pid = tt.id
@@ -85,7 +85,7 @@
 		 where t.id = #{id}
 	</select>
 	
-	<select id="get" resultType="list" resultMap="result">
+	<select id="query" resultType="list" resultMap="result">
 		select <include refid="columns"/>, tt.tc_name tc_p_name, t2.tc_name tc_app_name
 		  from tb_permit t
 		  left join tb_permit tt on t.pid = tt.id
@@ -114,7 +114,7 @@
 		   and t.tc_url = #{tc_url};
 	</select>
 	
-	<select id="getByRoleId" resultType="list" resultMap="result">
+	<select id="queryByRoleId" resultType="list" resultMap="result">
 		select <include refid="columns"/> 
 		  from tb_permit t
          inner join tb_role_permit_mapping t1
@@ -122,7 +122,7 @@
 		   and t1.tc_role_id=#{tc_role_id};
 	</select>
 	
-	<select id="getBtnPermitByUserId" resultType="list" resultMap="result">
+	<select id="queryBtnPermitByUserId" resultType="list" resultMap="result">
 		select <include refid="columns"/>  from tb_permit t
 		 inner join tb_role_permit_mapping t1 on t.id=t1.tc_permit_id and t.tc_type=2
 		 inner join tb_user_role_mapping t2 on t1.tc_role_id=t2.tc_role_id and t2.tc_user_id=#{tc_user_id}

@@ -24,7 +24,7 @@ public class MenuService extends BaseService<Menu,Long>
 	
 	public List getAll()
 	{
-		List<Menu> menuData = menuDao.get(null);
+		List<Menu> menuData = menuDao.query(null);
 		List<Object> treeNodes = new ArrayList<Object>();
 		for(int i=0; i<menuData.size(); i++)
 		{

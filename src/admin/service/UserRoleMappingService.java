@@ -15,12 +15,14 @@ public class UserRoleMappingService extends BaseService<UserRoleMapping,Long>
 	private UserRoleMappingDao userRoleMappingDao;
 
 	@Override
-	public BaseDao<UserRoleMapping,Long> getEntityDao() {
+	public BaseDao<UserRoleMapping,Long> getEntityDao() 
+	{
 		return userRoleMappingDao;
 	}
 	
 	@Override
-	public void add(UserRoleMapping po){
+	public void add(UserRoleMapping po)
+	{
 		userRoleMappingDao.add(po);
 	}
 }
