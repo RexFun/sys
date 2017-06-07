@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import admin.dao.UserDao;
-import admin.dao.UserRoleMappingDao;
+import admin.dao.UserRoleRsDao;
 import admin.entity.User;
-import admin.entity.UserRoleMapping;
+import admin.entity.UserRoleRs;
 import chok.devwork.BaseDao;
 import chok.devwork.BaseService;
 import chok.util.CollectionUtil;
@@ -18,7 +18,7 @@ public class UserService extends BaseService<User,Long>
 	@Autowired
 	private UserDao userDao;
 	@Autowired
-	private UserRoleMappingDao userRoleMappingDao;
+	private UserRoleRsDao userRoleRsDao;
 
 	@Override
 	public BaseDao<User,Long> getEntityDao() {
@@ -37,10 +37,10 @@ public class UserService extends BaseService<User,Long>
 		Long[] tcRoleIds = CollectionUtil.strToLongArray(po.get("tc_role_ids").toString(), ",");
 		for(Long tcRoleId : tcRoleIds)
 		{
-			UserRoleMapping o = new UserRoleMapping();
+			UserRoleRs o = new UserRoleRs();
 			o.set("tc_user_id", tcUserId);
 			o.set("tc_role_id", tcRoleId);
-			userRoleMappingDao.add(o);
+			userRoleRsDao.add(o);
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class UserService extends BaseService<User,Long>
 	{
 		for(Long id:ids)
 		{
-			userRoleMappingDao.delByUserId(id);
+			userRoleRsDao.delByUserId(id);
 			userDao.del(id);
 		}
 	}
@@ -61,17 +61,17 @@ public class UserService extends BaseService<User,Long>
 		if(po.get("tc_role_ids")!=null)
 		{
 			// 清空旧记录
-			userRoleMappingDao.delByUserId(po.getLong("id"));
+			userRoleRsDao.delByUserId(po.getLong("id"));
 			// 插入系统用户角色表
 			if (po.get("tc_role_ids").toString().length()<1) return;
 			Long tcUserId = po.getLong("id");
 			Long[] tcRoleIds = CollectionUtil.strToLongArray(po.get("tc_role_ids").toString(), ",");
 			for(Long tcRoleId : tcRoleIds)
 			{
-				UserRoleMapping o = new UserRoleMapping();
+				UserRoleRs o = new UserRoleRs();
 				o.set("tc_user_id", tcUserId);
 				o.set("tc_role_id", tcRoleId);
-				userRoleMappingDao.add(o);
+				userRoleRsDao.add(o);
 			}
 		}
 	}
@@ -80,7 +80,7 @@ public class UserService extends BaseService<User,Long>
 	public User get(Long id) 
 	{
 		User po = userDao.get(id);
-		po.set("tc_role_ids", userRoleMappingDao.getRoleIdsByUserId(id));
+		po.set("tc_role_ids", userRoleRsDao.getRoleIdsByUserId(id));
 		return po;
 	}
 }

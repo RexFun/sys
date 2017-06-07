@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import admin.dao.RoleDao;
-import admin.dao.RolePermitMappingDao;
-import admin.dao.UserRoleMappingDao;
+import admin.dao.RolePermitRsDao;
+import admin.dao.UserRoleRsDao;
 import admin.entity.Role;
-import admin.entity.RolePermitMapping;
+import admin.entity.RolePermitRs;
 import chok.devwork.BaseDao;
 import chok.devwork.BaseService;
 import chok.util.CollectionUtil;
@@ -20,9 +20,9 @@ public class RoleService extends BaseService<Role,Long>
 	@Autowired
 	private RoleDao roleDao;
 	@Autowired
-	private RolePermitMappingDao rolePermitMappingDao;
+	private RolePermitRsDao rolePermitRsDao;
 	@Autowired
-	private UserRoleMappingDao userRoleMappingDao;
+	private UserRoleRsDao userRoleRsDao;
 
 	@Override
 	public BaseDao<Role,Long> getEntityDao() {
@@ -40,10 +40,10 @@ public class RoleService extends BaseService<Role,Long>
 		Long[] tcPermitIds = CollectionUtil.strToLongArray(po.get("tc_permit_ids").toString(), ",");
 		for(Long tcPermitId : tcPermitIds)
 		{
-			RolePermitMapping o = new RolePermitMapping();
+			RolePermitRs o = new RolePermitRs();
 			o.set("tc_role_id", tcRoleId);
 			o.set("tc_permit_id", tcPermitId);
-			rolePermitMappingDao.add(o);
+			rolePermitRsDao.add(o);
 		}
 	}
 	
@@ -52,8 +52,8 @@ public class RoleService extends BaseService<Role,Long>
 	{
 		for(Long id:ids)
 		{
-			rolePermitMappingDao.delByRoleId(id);
-			userRoleMappingDao.delByRoleId(id);
+			rolePermitRsDao.delByRoleId(id);
+			userRoleRsDao.delByRoleId(id);
 			roleDao.del(id);
 		}
 	}
@@ -65,17 +65,17 @@ public class RoleService extends BaseService<Role,Long>
 		if(po.get("tc_permit_ids")!=null)
 		{
 			// 清空旧记录
-			rolePermitMappingDao.delByRoleId(po.getLong("id"));
+			rolePermitRsDao.delByRoleId(po.getLong("id"));
 			// 插入系统角色权限表
 			if (po.get("tc_permit_ids").toString().length()<1) return;
 			Long tcRoleId = po.getLong("id");
 			Long[] tcPermitIds = CollectionUtil.strToLongArray(po.get("tc_permit_ids").toString(), ",");
 			for(Long tcPermitId : tcPermitIds)
 			{
-				RolePermitMapping o = new RolePermitMapping();
+				RolePermitRs o = new RolePermitRs();
 				o.set("tc_role_id", tcRoleId);
 				o.set("tc_permit_id", tcPermitId);
-				rolePermitMappingDao.add(o);
+				rolePermitRsDao.add(o);
 			}
 		}
 	}
@@ -84,7 +84,7 @@ public class RoleService extends BaseService<Role,Long>
 	public Role get(Long id) 
 	{
 		Role po = roleDao.get(id);
-		po.set("tc_permit_ids", rolePermitMappingDao.getPermitIdsByRoleId(id));
+		po.set("tc_permit_ids", rolePermitRsDao.getPermitIdsByRoleId(id));
 		return po;
 	}
 	

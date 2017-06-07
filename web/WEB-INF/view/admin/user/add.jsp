@@ -2,6 +2,7 @@
 <%@ include file="/common/inc_header.jsp"%>
 <!-- 主内容面板 -->
 <div class="content-wrapper">
+	<!-- Header ======================================================================================================= -->
 	<section class="content-header">
 		<h1>${param.menuName}<small>新增</small></h1>
 		<ol class="breadcrumb">
@@ -10,40 +11,50 @@
 			<li class="active">新增</li>
 		</ol>
 	</section>
+	<!-- Content ======================================================================================================= -->
 	<section class="content">
-		<div class="box box-default">
-			<div class="box-header with-border">
-				<h3 class="box-title"><small><i class="glyphicon glyphicon-plus"></i></small></h3>
-				<div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" id="back"><i class="glyphicon glyphicon-arrow-left"></i></button>
-				</div>
-			</div>
-			<div class="box-body">
-				<form class="dataForm" id="dataForm" role="form" action="add2.action" method="post">
-					<div class="row">
-						<div class="col-md-6 column">
-							<fieldset>
-							<legend>基础信息</legend>
-								<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="" validate validate-rule-required/></div>
-								<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="" validate validate-rule-required/></div>
-								<div class="form-group"><label class="control-label" for="tc_email">邮箱：</label><input type="text" class="form-control input-sm" id="tc_email" name="m['tc_email']" value="" validate validate-rule-inputType="email"/></div>
-								<div class="form-group"><label class="control-label" for="tc_password">密码：</label><input type="text" class="form-control input-sm" id="tc_password" name="m['tc_password']" value="123456" validate validate-rule-required/></div>
-								<input type="hidden" id="tc_role_ids" name="m['tc_role_ids']" value="">
-							</fieldset>
-						</div>
-						<div class="col-md-6 column">
-							<fieldset>
-							<legend>角色</legend>
-								<input type="checkbox" id="expandAll"/><label for="expandAll">&nbsp;展开</label>
-								<input type="checkbox" id="chkAll"/><label for="chkAll">&nbsp;全选</label>
-								<ul id="roleTree" class="ztree" style="overflow:auto"></ul>
-							</fieldset>
+		<div class="row">
+			<!-- Left ======================================================================================================= -->
+			<div class="col-md-8">
+				<div class="box box-default">
+					<div class="box-header with-border">
+						<h3 class="box-title"><small><i class="glyphicon glyphicon-plus"></i></small></h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" id="back"><i class="glyphicon glyphicon-arrow-left"></i></button>
 						</div>
 					</div>
-				</form>
+					<div class="box-body">
+						<form class="dataForm" id="dataForm" role="form" action="add2.action" method="post">
+							<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="" validate validate-rule-required/></div>
+							<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="" validate validate-rule-required/></div>
+							<div class="form-group"><label class="control-label" for="tc_email">邮箱：</label><input type="text" class="form-control input-sm" id="tc_email" name="m['tc_email']" value="" validate validate-rule-inputType="email"/></div>
+							<div class="form-group"><label class="control-label" for="tc_password">密码：</label><input type="text" class="form-control input-sm" id="tc_password" name="m['tc_password']" value="123456" validate validate-rule-required/></div>
+							<input type="hidden" id="tc_role_ids" name="m['tc_role_ids']" value="">
+						</form>
+					</div>
+					<div class="box-footer">
+						<button type="submit" class="btn btn-block btn-success btn-flat pull-right" id="dataFormSave"><i class="glyphicon glyphicon-floppy-save"></i></button>
+					</div>
+				</div>
 			</div>
-			<div class="box-footer">
-				<button type="submit" class="btn btn-block btn-success btn-flat pull-right" id="dataFormSave"><i class="glyphicon glyphicon-floppy-save"></i></button>
+			<!-- right ====================================================================================================== -->
+			<div class="col-md-4">
+				<div class="box box-default">
+					<div class="box-header with-border">
+						<h3 class="box-title"><small><i class="glyphicon glyphicon-equalizer"></i></small>&nbsp;关联角色</h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+						</div>
+					</div>
+					<div class="box-body">
+						<input type="checkbox" id="expandAll"/><label for="expandAll">&nbsp;展开</label>
+						<input type="checkbox" id="chkAll"/><label for="chkAll">&nbsp;全选</label>
+						<ul id="roleTree" class="ztree" style="overflow:auto"></ul>
+					</div>
+					<div class="box-footer">
+					&nbsp;
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>

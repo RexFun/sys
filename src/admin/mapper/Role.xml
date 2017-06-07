@@ -56,7 +56,7 @@
 	<select id="queryByUserId" resultType="list" resultMap="result">
 		select <include refid="columns"/> 
 		  from tb_role t
-         inner join tb_user_role_mapping t1
+         inner join tb_user_role_rs t1
 		    on t.id = t1.tc_role_id 
 		   and t1.tc_user_id = #{tc_user_id};
 	</select>

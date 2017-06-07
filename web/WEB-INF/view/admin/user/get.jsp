@@ -2,6 +2,7 @@
 <%@ include file="/common/inc_header.jsp"%>
 <!-- 主内容面板 -->
 <div class="content-wrapper">
+	<!-- Header ======================================================================================================= -->
 	<section class="content-header">
 		<h1>${param.menuName}<small>明细</small></h1>
 		<ol class="breadcrumb">
@@ -10,40 +11,50 @@
 			<li class="active">明细</li>
 		</ol>
 	</section>
+	<!-- Content ======================================================================================================= -->
 	<section class="content">
-		<div class="box box-default">
-			<div class="box-header with-border">
-				<h3 class="box-title"><small><i class="glyphicon glyphicon-info-sign"></i></small></h3>
-				<div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" id="back"><i class="glyphicon glyphicon-arrow-left"></i></button>
-				</div>
-			</div>
-			<div class="box-body">
-				<form class="dataForm" id="dataForm" role="form">
-					<div class="row">
-						<div class="col-md-6 column">
-							<fieldset>
-							<legend>基础信息</legend>
-								<div class="form-group"><label class="control-label" for="id">ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
-								<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
-								<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
-								<div class="form-group"><label class="control-label" for="tc_email">邮箱：</label><input type="text" class="form-control input-sm" id="tc_email" name="m['tc_email']" value="${po.m.tc_email}" readonly="readonly"/></div>
-								<div class="form-group"><label class="control-label" for="tc_add_time">创建时间：</label><input type="text" class="form-control input-sm" id="tc_add_time" name="m['tc_add_time']" value="${po.m.tc_add_time}" readonly="readonly"/></div>
-							</fieldset>
-						</div>
-						<div class="col-md-6 column">
-							<fieldset>
-							<legend>角色</legend>
-								<input type="checkbox" id="expandAll"/><label for="expandAll">&nbsp;展开</label>
-								<ul id="roleTree" class="ztree" style="overflow:auto"></ul>
-							</fieldset>
+		<div class="row">
+			<!-- Left ======================================================================================================= -->
+			<div class="col-md-8">
+				<div class="box box-default">
+					<div class="box-header with-border">
+						<h3 class="box-title"><small><i class="glyphicon glyphicon-info-sign"></i></small></h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" id="back"><i class="glyphicon glyphicon-arrow-left"></i></button>
 						</div>
 					</div>
-				</form>
+					<div class="box-body">
+						<form class="dataForm" id="dataForm" role="form">
+							<div class="form-group"><label class="control-label" for="id">ID：</label><input type="text" class="form-control input-sm" id="id" name="m['id']" value="${po.m.id}" readonly="readonly"/></div>
+							<div class="form-group"><label class="control-label" for="tc_code">代号：</label><input type="text" class="form-control input-sm" id="tc_code" name="m['tc_code']" value="${po.m.tc_code}" readonly="readonly"/></div>
+							<div class="form-group"><label class="control-label" for="tc_name">名称：</label><input type="text" class="form-control input-sm" id="tc_name" name="m['tc_name']" value="${po.m.tc_name}" readonly="readonly"/></div>
+							<div class="form-group"><label class="control-label" for="tc_email">邮箱：</label><input type="text" class="form-control input-sm" id="tc_email" name="m['tc_email']" value="${po.m.tc_email}" readonly="readonly"/></div>
+							<div class="form-group"><label class="control-label" for="tc_add_time">创建时间：</label><input type="text" class="form-control input-sm" id="tc_add_time" name="m['tc_add_time']" value="${po.m.tc_add_time}" readonly="readonly"/></div>
+						</form>
+					</div>
+					<div class="box-footer">
+					&nbsp;
+					</div>
+				</div>
 			</div>
-			<div class="box-footer">
-			&nbsp;
-			</div>
+			<!-- right ====================================================================================================== -->
+			<div class="col-md-4">
+				<div class="box box-default">
+					<div class="box-header with-border">
+						<h3 class="box-title"><small><i class="glyphicon glyphicon-equalizer"></i></small>&nbsp;关联角色</h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+						</div>
+					</div>
+					<div class="box-body">
+						<input type="checkbox" id="expandAll"/><label for="expandAll">&nbsp;展开</label>
+						<ul id="roleTree" class="ztree" style="overflow:auto"></ul>
+					</div>
+					<div class="box-footer">
+					&nbsp;
+					</div>
+				</div>
+			</section>
 		</div>
 	</section>
 </div>

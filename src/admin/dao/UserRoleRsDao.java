@@ -2,16 +2,16 @@ package admin.dao;
 
 import org.springframework.stereotype.Repository;
 
-import admin.entity.UserRoleMapping;
+import admin.entity.UserRoleRs;
 import chok.devwork.BaseDao;
 
 @Repository
-public class UserRoleMappingDao extends BaseDao<UserRoleMapping,Long>
+public class UserRoleRsDao extends BaseDao<UserRoleRs,Long>
 {
 	@Override
-	public Class<UserRoleMapping> getEntityClass()
+	public Class<UserRoleRs> getEntityClass()
 	{
-		return UserRoleMapping.class;
+		return UserRoleRs.class;
 	}
 	
 	public void delByUserId(Long userId)
