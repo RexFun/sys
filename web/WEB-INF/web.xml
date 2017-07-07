@@ -52,6 +52,117 @@
     	<filter-name>springCharacterEncodingFilter</filter-name>     
 	    <url-pattern>/*</url-pattern>     
 	</filter-mapping>
+
+	<!-- ======================== 单点登录开始 ======================== -->
+    <filter>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <param-value>https://localhost:18443/cas</param-value>
+        </init-param>
+    </filter>
+
+    <listener>
+        <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>CAS Authentication Filter</filter-name>
+        <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+        <init-param>
+            <param-name>casServerLoginUrl</param-name>
+            <param-value>https://localhost:18443/cas/login</param-value>
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <param-value>https://localhost:6443/sys</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>CAS Validation Filter</filter-name>
+        <filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <param-value>https://localhost:18443/cas</param-value>
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <param-value>https://localhost:6443/sys</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+        <filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CAS Validation Filter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CAS Authentication Filter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+	<!-- ======================== 单点登录结束 ======================== -->
+	
+	<!-- 基于CAS访问授权过滤器 -->
+	<filter>
+		<filter-name>CasAccessFilter</filter-name>
+		<filter-class>chok.cas.client.filter.CasAccessFilter</filter-class>
+		<init-param>
+			<param-name>ssoApiURL</param-name>
+			<param-value>http://localhost:8585/sso/api</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ignoreURL</param-name>
+			<param-value>
+			/admin/logout.action,
+			/admin/home/query.action,
+			/admin/home/searchMenu.action,
+			/noaccess.jsp
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>appId</param-name>
+			<param-value>1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>isNeedChkAct</param-name>
+			<param-value>1</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CasAccessFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 基于CAS登出过滤器 -->
+	<filter> 
+		<filter-name>CasLogoutFilter</filter-name>
+		<filter-class>chok.cas.client.filter.CasLogoutFilter</filter-class> 
+		<init-param>
+			<param-name>logoutURL</param-name>
+			<param-value>https://localhost:18443/cas/logout.action</param-value>
+		</init-param>
+	</filter> 
+	<filter-mapping> 
+		<filter-name>CasLogoutFilter</filter-name>
+		<url-pattern>/admin/logout.action</url-pattern> 
+	</filter-mapping> 
 	
 	<!-- sso修改密码过滤器 -->
 	<filter>
@@ -63,6 +174,7 @@
 		<url-pattern>/auth/password.action</url-pattern>
 	</filter-mapping>
 	<!-- sso登出过滤器 -->
+	<!-- 
 	<filter>
 		<filter-name>ssoLogoutFilter</filter-name>
 		<filter-class>chok.sso.filter.LogoutFilter</filter-class>
@@ -71,21 +183,23 @@
 		<filter-name>ssoLogoutFilter</filter-name>
 		<url-pattern>/auth/logout.action</url-pattern>
 	</filter-mapping>
+	 -->
 	<!-- sso登录过滤器 -->
+	<!-- 
 	<filter>
 		<filter-name>ssoLoginFilter</filter-name>
 		<filter-class>chok.sso.filter.LoginFilter</filter-class>
 		<init-param>
 			<param-name>ssoURL</param-name>     
-			<param-value>http://172.20.4.113:8585/sso</param-value>     
+			<param-value>http://localhost:8585/sso</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ssoAuthURL</param-name>     
-			<param-value>http://172.20.4.113:8585/sso/auth</param-value>     
+			<param-value>http://localhost:8585/sso/auth</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ssoApiURL</param-name>     
-			<param-value>http://172.20.4.113:8585/sso/api</param-value>     
+			<param-value>http://localhost:8585/sso/api</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ignoreURL</param-name>     
@@ -96,17 +210,19 @@
 		<filter-name>ssoLoginFilter</filter-name>
 		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
+	 -->
 	<!-- sso授权过滤器 -->
+	<!-- 
 	<filter>
 		<filter-name>ssoAuthFilter</filter-name>
 		<filter-class>chok.sso.filter.AuthFilter</filter-class>
 		<init-param>
 			<param-name>ssoURL</param-name>     
-			<param-value>http://172.20.4.113:8585/sso</param-value>     
+			<param-value>http://localhost:8585/sso</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ssoApiURL</param-name>     
-			<param-value>http://172.20.4.113:8585/sso/api</param-value>     
+			<param-value>http://localhost:8585/sso/api</param-value>     
 		</init-param>
 		<init-param>
 			<param-name>ignoreURL</param-name>     
@@ -125,7 +241,7 @@
 		<filter-name>ssoAuthFilter</filter-name>
 		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
-	 
+	  -->
     <!-- Spring MVC servlet -->  
     <servlet>  
         <servlet-name>springmvc</servlet-name>  
