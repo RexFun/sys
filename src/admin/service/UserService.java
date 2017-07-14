@@ -29,7 +29,7 @@ public class UserService extends BaseService<User,Long>
 	public void add(User po)
 	{
 		// 插入系统用户表
-		po.set("tc_password", EncryptionUtil.getMD5(po.getString("tc_password")));
+		po.set("tc_password", EncryptionUtil.getMD5(po.getString("tc_password")).toLowerCase());
 		userDao.add(po);
 		// 插入系统角色权限表
 		if (po.get("tc_role_ids").toString().length()<1) return;
