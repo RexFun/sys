@@ -153,13 +153,13 @@
 	</filter-mapping>
 
 	<!-- 基于CAS登出过滤器 -->
-	
+
 	<filter> 
 		<filter-name>CasLogoutFilter</filter-name>
 		<filter-class>chok.cas.client.filter.CasLogoutFilter</filter-class> 
 		<init-param>
 			<param-name>logoutURL</param-name>
-			<param-value>https://localhost:18443/cas/logout.action</param-value>
+			<param-value>https://localhost:18443/cas/logout.action?service=http://localhost:8585/portal</param-value>
 		</init-param>
 	</filter> 
 	<filter-mapping> 
@@ -168,7 +168,7 @@
 	</filter-mapping> 
 
 	<!-- 基于CAS密码修改过滤器 -->
-	
+
 	<filter> 
 		<filter-name>CasPasswordFilter</filter-name>
 		<filter-class>chok.cas.client.filter.CasPasswordFilter</filter-class> 
@@ -186,7 +186,7 @@
 	
 	<!-- ======================== SSO单点登录开始 ======================== -->
 	<!-- sso修改密码过滤器 -->
-	<!-- 
+<!-- 
 	<filter>
 		<filter-name>ssoPasswordFilter</filter-name>
 		<filter-class>chok.sso.filter.PasswordFilter</filter-class>
@@ -195,9 +195,9 @@
 		<filter-name>ssoPasswordFilter</filter-name>
 		<url-pattern>/sso/password.action</url-pattern>
 	</filter-mapping>
-	 -->
+ -->
 	<!-- sso登出过滤器 -->
-	<!-- 
+<!-- 
 	<filter>
 		<filter-name>ssoLogoutFilter</filter-name>
 		<filter-class>chok.sso.filter.LogoutFilter</filter-class>
@@ -206,9 +206,9 @@
 		<filter-name>ssoLogoutFilter</filter-name>
 		<url-pattern>/sso/logout.action</url-pattern>
 	</filter-mapping>
-	 -->
+ -->
 	<!-- sso登录过滤器 -->
-	<!-- 
+<!-- 
 	<filter>
 		<filter-name>ssoLoginFilter</filter-name>
 		<filter-class>chok.sso.filter.LoginFilter</filter-class>
@@ -229,9 +229,9 @@
 		<filter-name>ssoLoginFilter</filter-name>
 		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
-	 -->
+ -->
 	<!-- sso授权过滤器 -->
-	<!-- 
+<!-- 
 	<filter>
 		<filter-name>ssoAuthFilter</filter-name>
 		<filter-class>chok.sso.filter.AuthFilter</filter-class>
@@ -260,7 +260,7 @@
 		<filter-name>ssoAuthFilter</filter-name>
 		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
-	 -->
+ -->
 	<!-- ======================== SSO单点登录结束 ======================== -->
 	
     <!-- Spring MVC servlet -->  
