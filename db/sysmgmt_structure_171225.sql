@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `appmgmt` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `appmgmt`;
 -- MySQL dump 10.13  Distrib 5.7.9, for osx10.9 (x86_64)
 --
--- Host: localhost    Database: appmgmt
+-- Host: 127.0.0.1    Database: appmgmt
 -- ------------------------------------------------------
--- Server version	5.5.54-0ubuntu0.12.04.1
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +14,26 @@ USE `appmgmt`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `com_audit_trail`
+--
+
+DROP TABLE IF EXISTS `com_audit_trail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `com_audit_trail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `AUD_USER` varchar(100) DEFAULT NULL,
+  `AUD_CLIENT_IP` varchar(15) DEFAULT NULL,
+  `AUD_SERVER_IP` varchar(15) DEFAULT NULL,
+  `AUD_RESOURCE` varchar(100) DEFAULT NULL,
+  `AUD_ACTION` varchar(100) DEFAULT NULL,
+  `APPLIC_CD` varchar(5) DEFAULT NULL,
+  `AUD_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2101 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tb_app`
@@ -125,6 +143,22 @@ CREATE TABLE `tb_user` (
   `tc_add_time` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tb_user1`
+--
+
+DROP TABLE IF EXISTS `tb_user1`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_user1` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tc_code` varchar(100) DEFAULT NULL,
+  `tc_password` varchar(100) DEFAULT NULL,
+  `tc_email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,4 +301,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-25 10:53:08
+-- Dump completed on 2017-12-25 13:42:36

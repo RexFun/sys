@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for osx10.9 (x86_64)
 --
--- Host: localhost    Database: appmgmt
+-- Host: 127.0.0.1    Database: appmgmt
 -- ------------------------------------------------------
--- Server version	5.5.54-0ubuntu0.12.04.1
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,23 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_app`
+-- Dumping data for table `com_audit_trail`
 --
 
-DROP TABLE IF EXISTS `tb_app`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_app` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tc_code` varchar(45) DEFAULT NULL,
-  `tc_name` varchar(45) DEFAULT NULL,
-  `tc_url` varchar(200) DEFAULT NULL,
-  `tc_status` varchar(1) DEFAULT NULL,
-  `tc_order` varchar(10) DEFAULT NULL,
-  `tc_permit_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `com_audit_trail` WRITE;
+/*!40000 ALTER TABLE `com_audit_trail` DISABLE KEYS */;
+INSERT INTO `com_audit_trail` VALUES (2093,'audit:unknown','0:0:0:0:0:0:0:1','0:0:0:0:0:0:0:1','[event=success,timestamp=Mon Dec 25 11:32:36 CST 2017,source=RankedAuthenticationProviderWebflowEven','AUTHENTICATION_EVENT_TRIGGERED','CAS','2017-12-25 03:32:36'),(2094,'root','0:0:0:0:0:0:0:1','0:0:0:0:0:0:0:1','Supplied credentials: [root]','AUTHENTICATION_SUCCESS','CAS','2017-12-25 03:33:07'),(2095,'root','0:0:0:0:0:0:0:1','0:0:0:0:0:0:0:1','TGT-1-zNPQWEFfwEUj6TNVo2qCL7UbaZcAy6wRMFjrrmWteAcfBWYnNo-mac373','TICKET_GRANTING_TICKET_CREATED','CAS','2017-12-25 03:33:07'),(2096,'root','0:0:0:0:0:0:0:1','0:0:0:0:0:0:0:1','ST-1-3BRormh4asjtbKEWVmTU-mac373 for https://localhost:6443/sys/admin/home/query.action','SERVICE_TICKET_CREATED','CAS','2017-12-25 03:33:07'),(2097,'root','127.0.0.1','127.0.0.1','ST-1-3BRormh4asjtbKEWVmTU-mac373','SERVICE_TICKET_VALIDATED','CAS','2017-12-25 03:33:16'),(2098,'audit:unknown','0:0:0:0:0:0:0:1','0:0:0:0:0:0:0:1','[event=success,timestamp=Mon Dec 25 13:29:29 CST 2017,source=InitialAuthenticationAttemptWebflowEven','AUTHENTICATION_EVENT_TRIGGERED','CAS','2017-12-25 05:29:29'),(2099,'root','0:0:0:0:0:0:0:1','0:0:0:0:0:0:0:1','ST-2-xHWc9u1xaz2eTRZHVl31-mac373 for https://localhost:7443/origami/admin/home/query.action','SERVICE_TICKET_CREATED','CAS','2017-12-25 05:29:29'),(2100,'root','127.0.0.1','127.0.0.1','ST-2-xHWc9u1xaz2eTRZHVl31-mac373','SERVICE_TICKET_VALIDATED','CAS','2017-12-25 05:29:30');
+/*!40000 ALTER TABLE `com_audit_trail` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `tb_app`
@@ -45,27 +36,6 @@ INSERT INTO `tb_app` VALUES (1,'appmgmt','统一应用管理平台','http://loca
 UNLOCK TABLES;
 
 --
--- Table structure for table `tb_menu`
---
-
-DROP TABLE IF EXISTS `tb_menu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_menu` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `pid` bigint(20) DEFAULT NULL,
-  `tc_permit_id` bigint(20) DEFAULT NULL,
-  `tc_app_id` bigint(20) DEFAULT NULL,
-  `tc_code` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_order` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
-  `tc_level` varchar(1) CHARACTER SET utf8 DEFAULT '1' COMMENT '级别：0->根节点；1->一级节点；2->次级节点',
-  PRIMARY KEY (`id`),
-  KEY `fk_permit` (`tc_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `tb_menu`
 --
 
@@ -74,26 +44,6 @@ LOCK TABLES `tb_menu` WRITE;
 INSERT INTO `tb_menu` VALUES (1,0,27,3,'Category management','分类管理','2-1','1'),(2,0,2,3,'Model management','模型管理','2-2','1'),(3,0,3,1,'System management','系统管理','1-1','1'),(4,3,4,1,'Menu management','菜单管理','1-1-3','2'),(5,3,5,1,'Permit management','权限管理','1-1-2','2'),(6,3,6,1,'Role management','角色管理','1-1-4','2'),(7,3,7,1,'User management','用户管理','1-1-5','2'),(8,0,61,1,'test','test','1-2','1'),(9,8,62,1,'test-c','test-c','1-2-1','2'),(10,9,67,1,'test-c-c1','test-c-c1','1-2-1-1','2'),(12,3,75,1,'App management','应用管理','1-1-1','2'),(13,9,68,1,'test-c-c2','test-c-c2','1-2-1-2','2'),(14,0,18,3,'Image management','图片管理','2-3','1');
 /*!40000 ALTER TABLE `tb_menu` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `tb_permit`
---
-
-DROP TABLE IF EXISTS `tb_permit`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_permit` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `pid` bigint(20) DEFAULT '0',
-  `tc_app_id` bigint(20) DEFAULT NULL,
-  `tc_code` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_type` int(11) DEFAULT NULL COMMENT '1:菜单权限\n2:按钮权限',
-  `tc_url` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_order` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tb_permit`
@@ -106,21 +56,6 @@ INSERT INTO `tb_permit` VALUES (2,84,3,'Model management','模型管理',1,'/adm
 UNLOCK TABLES;
 
 --
--- Table structure for table `tb_role`
---
-
-DROP TABLE IF EXISTS `tb_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tc_code` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_name` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `tb_role`
 --
 
@@ -129,23 +64,6 @@ LOCK TABLES `tb_role` WRITE;
 INSERT INTO `tb_role` VALUES (28,'sys_admin','系统管理员'),(34,'user','普通用户'),(35,'super_admin','超级管理员');
 /*!40000 ALTER TABLE `tb_role` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `tb_role_permit_rs`
---
-
-DROP TABLE IF EXISTS `tb_role_permit_rs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_role_permit_rs` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tc_role_id` bigint(20) NOT NULL,
-  `tc_permit_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_permit` (`tc_permit_id`),
-  KEY `fk_role` (`tc_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1834 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tb_role_permit_rs`
@@ -158,24 +76,6 @@ INSERT INTO `tb_role_permit_rs` VALUES (1476,34,83),(1477,34,3),(1478,34,75),(14
 UNLOCK TABLES;
 
 --
--- Table structure for table `tb_user`
---
-
-DROP TABLE IF EXISTS `tb_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tc_code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_password` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tc_add_time` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `tb_user`
 --
 
@@ -186,21 +86,13 @@ INSERT INTO `tb_user` VALUES (2,'u1','u1','u1@qq.com','E10ADC3949BA59ABBE56E057F
 UNLOCK TABLES;
 
 --
--- Table structure for table `tb_user_role_rs`
+-- Dumping data for table `tb_user1`
 --
 
-DROP TABLE IF EXISTS `tb_user_role_rs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_user_role_rs` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tc_user_id` bigint(20) NOT NULL,
-  `tc_role_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_role` (`tc_role_id`),
-  KEY `fk_user` (`tc_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `tb_user1` WRITE;
+/*!40000 ALTER TABLE `tb_user1` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_user1` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `tb_user_role_rs`
@@ -211,120 +103,6 @@ LOCK TABLES `tb_user_role_rs` WRITE;
 INSERT INTO `tb_user_role_rs` VALUES (43,7,28),(47,3,34),(50,9,34),(51,10,34),(52,11,34),(53,12,34),(54,13,34),(55,14,34),(56,15,34),(57,16,34),(58,17,34),(59,18,34),(60,19,34),(61,20,34),(62,21,34),(63,22,34),(64,23,34),(65,24,34),(71,4,34),(72,8,34),(76,5,35),(79,2,34);
 /*!40000 ALTER TABLE `tb_user_role_rs` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'appmgmt'
---
-/*!50003 DROP FUNCTION IF EXISTS `f_get_child_list` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `f_get_child_list`(rootId varchar(1000)) RETURNS varchar(1000) CHARSET utf8 COLLATE utf8_unicode_ci
-begin
-	declare sChildList varchar(1000); 
-	declare sChildTemp varchar(1000);
-	set sChildTemp =cast(rootId as char);
-    
-    
-WHILE sChildTemp is not null DO
-
-	IF (sChildList is not null) THEN 
-		SET sChildList = concat(sChildList,',',sChildTemp); 
-	ELSE 
-		SET sChildList = concat(sChildTemp); 
-	END IF;
-
-	SELECT group_concat(id) INTO sChildTemp FROM appmgmt.tb_menu where FIND_IN_SET(pid,sChildTemp)>0;
-END WHILE;
-RETURN sChildList;
-
-end ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `f_get_parent_list` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `f_get_parent_list`(rootId varchar(1000)) RETURNS varchar(1000) CHARSET utf8 COLLATE utf8_unicode_ci
-begin
-	declare sParentList varchar(1000); 
-	declare sParentTemp varchar(1000);
-	set sParentTemp =cast(rootId as char);
-    
-    
-WHILE sParentTemp is not null DO
-
-	IF (sParentList is not null) THEN 
-		SET sParentList = concat(sParentTemp,',',sParentList); 
-	ELSE 
-		SET sParentList = concat(sParentTemp); 
-	END IF;
-
-	SELECT group_concat(pid) INTO sParentTemp FROM appmgmt.tb_menu where FIND_IN_SET(id,sParentTemp)>0;
-END WHILE;
-RETURN sParentList;
-
-end ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `p_menu_get_by_userId_and_menuName` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `p_menu_get_by_userId_and_menuName`(i_userId   INT,
-																				i_menuName VARCHAR(100))
-BEGIN
-	DECLARE v_menuId_set VARCHAR(1000);
-    -- 获取被搜索的菜单id集合
-	SELECT group_concat(t.id)
-	  INTO v_menuId_set 
-	  FROM tb_menu t
-	 INNER JOIN tb_role_permit_mapping t1 ON t.tc_permit_id = t1.tc_permit_id
-	 INNER JOIN tb_user_role_mapping t2 ON t1.tc_role_id = t2.tc_role_id
-			AND t2.tc_user_id = i_userId
-	 WHERE t.tc_name LIKE CONCAT('%', i_menuName, '%');
-	-- 返回结果集
-    SELECT t.* FROM
-    (
-		SELECT t.*
-		  FROM tb_menu t
-		 WHERE FIND_IN_SET(t.id, F_GET_PARENT_LIST(v_menuId_set)) 
-		UNION 
-		SELECT t.*
-		  FROM tb_menu t
-		 WHERE FIND_IN_SET(t.id, F_GET_CHILD_LIST(v_menuId_set))
-	)t
-	ORDER BY t.tc_order;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -335,4 +113,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-25 10:41:13
+-- Dump completed on 2017-12-25 13:43:22
