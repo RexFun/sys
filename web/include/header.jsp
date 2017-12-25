@@ -3,8 +3,8 @@
 <header class="main-header">
 	<!-- Logo -->
 	<a href="javascript:void(0);return false;" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><b>S</b>App</span> <!-- logo for regular state and mobile devices -->
-		<span class="logo-lg"><b>System</b>App</span>
+		<span class="logo-mini"><b>A</b>Mgmt</span> <!-- logo for regular state and mobile devices -->
+		<span class="logo-lg"><b>App</b>Mgmt</span>
 	</a>
 	<!-- 顶部导航栏 -->
 	<nav class="navbar navbar-static-top">
